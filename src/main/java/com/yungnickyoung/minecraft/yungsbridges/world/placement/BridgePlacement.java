@@ -32,11 +32,13 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
                 if (helper.func_242894_a(startingPos).isSolid() && helper.func_242894_a(endingPos).isSolid()) {
                     // Middle blocks must all be water
                     boolean isAllWater = true;
-                    for (int waterZ = config.minWaterZ; waterZ <= config.maxWaterZ; waterZ++) {
-                        seaLevelMutable.setPos(startingPos.getX(), seaLevel, startingPos.getZ() + waterZ);
-                        if (helper.func_242894_a(seaLevelMutable).getMaterial() != Material.WATER) {
-                            isAllWater = false;
-                            break;
+                    for (int waterX = -config.width / 2; waterX <= config.width / 2; waterX++) {
+                        for (int waterZ = config.minWaterZ; waterZ <= config.maxWaterZ; waterZ++) {
+                            seaLevelMutable.setPos(startingPos.getX() + waterX, seaLevel, startingPos.getZ() + waterZ);
+                            if (helper.func_242894_a(seaLevelMutable).getMaterial() != Material.WATER) {
+                                isAllWater = false;
+                                break;
+                            }
                         }
                     }
                     if (isAllWater) {
