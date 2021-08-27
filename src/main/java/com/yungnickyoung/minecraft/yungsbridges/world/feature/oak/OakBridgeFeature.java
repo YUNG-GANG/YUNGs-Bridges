@@ -5,8 +5,7 @@ import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModProcessors;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.AbstractTemplateFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgeSizeConfig;
-import com.yungnickyoung.minecraft.yungsbridges.world.processor.*;
-import net.minecraft.util.ResourceLocation;
+import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -42,7 +41,6 @@ public class OakBridgeFeature extends AbstractTemplateFeature<BridgeSizeConfig> 
 
     @Override
     public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random rand, BlockPos pos, BridgeSizeConfig config) {
-        ResourceLocation id = new ResourceLocation(YungsBridges.MOD_ID, "bridge/oak/" + config.size + "_0");
         BlockPos.Mutable startPos = pos.toMutable();
         startPos.setY(world.getSeaLevel()); // Starting pos will be center of bridge
 
@@ -81,7 +79,7 @@ public class OakBridgeFeature extends AbstractTemplateFeature<BridgeSizeConfig> 
 //        if (featureRotation == null) return false;
 //
         // Generate the feature. Implicitly applies processors after generation.
-        Template template = this.createTemplate(id, world, rand, startPos);
+        Template template = this.createTemplate(config.id, world, rand, startPos);
 
 //        world.setBlockState(pos, Blocks.DIAMOND_BLOCK.getDefaultState(), 2);
 //        world.setBlockState(pos.offset(bridgeDirection, 5), Blocks.RED_WOOL.getDefaultState(), 2);

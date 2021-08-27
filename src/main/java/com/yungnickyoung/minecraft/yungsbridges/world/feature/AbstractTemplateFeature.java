@@ -57,13 +57,13 @@ public abstract class AbstractTemplateFeature<C extends IFeatureConfig> extends 
 
         // Find the corner from which we should spawn the template.
         // We are using the pos parameter passed in as the center of the feature, so we must offset.
-        BlockPos cornerPos = pos.add(-template.getSize().getX() / 2, 0, -template.getSize().getZ() / 2);
+//        BlockPos cornerPos = pos.add(-template.getSize().getX() / 2, 0, -template.getSize().getZ() / 2);
 
         // Create & place template
-        template.func_237144_a_(world, cornerPos, placement, rand);
+        template.func_237144_a_(world, pos, placement, rand);
 
         // Additional optional processing
-        processors.forEach(processor -> processor.processTemplate(template, world, rand, cornerPos, placement));
+        processors.forEach(processor -> processor.processTemplate(template, world, rand, pos, placement));
 
         return template;
     }

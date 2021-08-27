@@ -19,15 +19,15 @@ public class BridgePlacement extends Placement<BridgeSizeConfig> {
 
     @Override
     public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, BridgeSizeConfig config, BlockPos pos) {
-        // Mutable that always is at sea level
+        // Mutable that is always at sea level
         BlockPos.Mutable seaLevelMutable = pos.toMutable();
         int seaLevel = helper.func_242895_b() - 1;
         seaLevelMutable.setY(seaLevel);
 
-        for (int x = 0; x < 16; x++) {
-            for (int startZ = 0; startZ < 16 - (config.size * 2); startZ++) {
+        for (int x = 1; x < 16; x++) {
+            for (int startZ = 0; startZ < 16; startZ++) {
                 BlockPos startingPos = new BlockPos(pos.getX() + x, seaLevel, pos.getZ() + startZ);
-                BlockPos endingPos = new BlockPos(pos.getX() + x, seaLevel, pos.getZ() + startZ + config.size * 2);
+                BlockPos endingPos = new BlockPos(pos.getX() + x, seaLevel, pos.getZ() + startZ + config.length + 1);
 
                 if (helper.func_242894_a(startingPos).isSolid() && helper.func_242894_a(endingPos).isSolid()) {
                     // Middle blocks must all be water
@@ -41,7 +41,7 @@ public class BridgePlacement extends Placement<BridgeSizeConfig> {
                     }
                     if (isAllWater) {
                         // Valid position for bridge!
-                        return Stream.of(new BlockPos(startingPos.getX(), seaLevel, pos.getZ() + startZ + config.size));
+                        return Stream.of(new BlockPos(startingPos.getX() - config.width / 2, seaLevel, pos.getZ() + startZ + 1));
                     }
                 }
             }

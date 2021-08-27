@@ -9,14 +9,14 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 public class YBModConfiguredFeatures {
     public static final ConfiguredFeature<?, ?> BRIDGE_OAK_5 = YBModFeatures.BRIDGE_OAK.get()
-        .withConfiguration(new BridgeSizeConfig(5, 3, 7))
-        .withPlacement(YBModPlacements.BRIDGE.get().configure(new BridgeSizeConfig(5, 3, 7)))
+        .withConfiguration(new BridgeSizeConfig(9, 3, 3, 7, "bridge/oak/5_0"))
+        .withPlacement(YBModPlacements.BRIDGE.get().configure(new BridgeSizeConfig(9, 3, 3, 7, "bridge/oak/5_0")))
         .chance(1)
         .withPlacement(YBModConfiguredPlacements.RNG_INITIALIZER);
 
     public static final ConfiguredFeature<?, ?> BRIDGE_OAK_7 = YBModFeatures.BRIDGE_OAK.get()
-        .withConfiguration(new BridgeSizeConfig(7, 3, 9))
-        .withPlacement(YBModPlacements.BRIDGE.get().configure(new BridgeSizeConfig(7, 3, 9)))
+        .withConfiguration(new BridgeSizeConfig(11, 3, 3, 9, "bridge/oak/7_0"))
+        .withPlacement(YBModPlacements.BRIDGE.get().configure(new BridgeSizeConfig(11, 3, 3, 9, "bridge/oak/7_0")))
         .chance(1)
         .withPlacement(YBModConfiguredPlacements.RNG_INITIALIZER);
 
