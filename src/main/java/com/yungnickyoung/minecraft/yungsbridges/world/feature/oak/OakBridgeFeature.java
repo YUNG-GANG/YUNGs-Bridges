@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModProcessors;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.AbstractTemplateFeature;
-import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgeSizeConfig;
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.template.Template;
 import java.util.List;
 import java.util.Random;
 
-public class OakBridgeFeature extends AbstractTemplateFeature<BridgeSizeConfig> {
+public class OakBridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> {
     /**
      * List of processors this template feature will use right after generation.
      */
@@ -28,7 +28,7 @@ public class OakBridgeFeature extends AbstractTemplateFeature<BridgeSizeConfig> 
     );
 
     public OakBridgeFeature() {
-        super(BridgeSizeConfig.CODEC);
+        super(BridgeFeatureConfig.CODEC);
     }
 
     /**
@@ -40,7 +40,7 @@ public class OakBridgeFeature extends AbstractTemplateFeature<BridgeSizeConfig> 
     }
 
     @Override
-    public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random rand, BlockPos pos, BridgeSizeConfig config) {
+    public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random rand, BlockPos pos, BridgeFeatureConfig config) {
         BlockPos.Mutable startPos = pos.toMutable();
         startPos.setY(world.getSeaLevel()); // Starting pos will be center of bridge
 

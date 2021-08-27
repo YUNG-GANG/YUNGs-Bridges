@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.yungsbridges.init;
 
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacement;
-import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgeSizeConfig;
+import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacementConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.RngInitializerPlacement;
 import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
@@ -19,7 +19,7 @@ public class YBModPlacements {
 
     /* Placements */
     public static final RegistryObject<Placement<NoPlacementConfig>> RNG_INITIALIZER = register("rng_initializer", RngInitializerPlacement::new);
-    public static final RegistryObject<Placement<BridgeSizeConfig>> BRIDGE = register("bridge", BridgePlacement::new);
+    public static final RegistryObject<Placement<BridgePlacementConfig>> BRIDGE = register("bridge", BridgePlacement::new);
 
     public static void init() {
         PLACEMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());

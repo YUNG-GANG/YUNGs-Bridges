@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class BridgePlacement extends Placement<BridgeSizeConfig> {
+public class BridgePlacement extends Placement<BridgePlacementConfig> {
     public BridgePlacement() {
-        super(BridgeSizeConfig.CODEC);
+        super(BridgePlacementConfig.CODEC);
     }
 
     @Override
-    public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, BridgeSizeConfig config, BlockPos pos) {
+    public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, BridgePlacementConfig config, BlockPos pos) {
         // Mutable that is always at sea level
         BlockPos.Mutable seaLevelMutable = pos.toMutable();
         int seaLevel = helper.func_242895_b() - 1;
