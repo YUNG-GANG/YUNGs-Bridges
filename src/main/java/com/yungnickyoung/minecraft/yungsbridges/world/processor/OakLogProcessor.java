@@ -19,10 +19,16 @@ public class OakLogProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden log for biome variants
         for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.OAK_LOG)) {
-            world.setBlockState(
-                blockInfo.pos,
-                getLogVariant(biome, blockInfo.state),
-                2);
+            world.setBlockState(blockInfo.pos, getLogVariant(biome, blockInfo.state), 2);
+        }
+
+        // Randomly replace lime stained glass w/ log block or air
+        for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.LIME_STAINED_GLASS)) {
+            if (rand.nextFloat() < .5f) {
+                world.setBlockState(blockInfo.pos, getLogVariant(biome, blockInfo.state), 2);
+            } else {
+                world.setBlockState(blockInfo.pos, Blocks.AIR.getDefaultState(), 2);
+            }
         }
     }
 

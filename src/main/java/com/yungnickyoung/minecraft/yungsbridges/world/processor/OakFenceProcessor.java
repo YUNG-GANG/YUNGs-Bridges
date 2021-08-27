@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.biome.Biome;
@@ -18,10 +19,23 @@ public class OakFenceProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden fence for biome variants
         for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.OAK_FENCE)) {
-            world.setBlockState(
-                blockInfo.pos,
-                getFenceVariant(biome, blockInfo.state),
-                2);
+            if (rand.nextFloat() < .5f) {
+                BlockState fenceBlock = getFenceVariant(biome, blockInfo.state);
+
+                // Adjust neighboring fences
+                BlockPos neighborPos = blockInfo.pos.offset(Direction.NORTH);
+                if (!world.getBlockState(neighborPos).isSolid()) {
+                    fenceBlock = fenceBlock.with(FenceBlock.NORTH, false);
+                }
+                world.setBlockState(blockInfo.pos, fenceBlock, 2);
+            } else {
+                world.setBlockState(blockInfo.pos, Blocks.AIR.getDefaultState(), 2);
+                // Adjust neighboring fences
+                BlockPos neighborPos = blockInfo.pos.offset(Direction.NORTH);
+                if (world.getBlockState(neighborPos).hasProperty(FenceBlock.SOUTH) && world.getBlockState(neighborPos).get(FenceBlock.SOUTH)) {
+                    world.setBlockState(neighborPos, world.getBlockState(neighborPos).with(FenceBlock.SOUTH, false), 2);
+                }
+            }
         }
     }
 
