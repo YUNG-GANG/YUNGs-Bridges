@@ -10,18 +10,25 @@ public class BridgePlacementConfig implements IPlacementConfig {
             Codec.INT.fieldOf("length").forGetter((config) -> config.length),
             Codec.INT.fieldOf("width").forGetter((config) -> config.width),
             Codec.INT.fieldOf("minWaterZ").forGetter((config) -> config.minWaterZ),
-            Codec.INT.fieldOf("maxWaterZ").forGetter((config) -> config.maxWaterZ)
+            Codec.INT.fieldOf("maxWaterZ").forGetter((config) -> config.maxWaterZ),
+            Codec.INT.fieldOf("widthOffset").forGetter((config) -> config.widthOffset)
         ).apply(codec, BridgePlacementConfig::new));
 
     public final int length;
     public final int width;
     public final int minWaterZ;
     public final int maxWaterZ;
+    public int widthOffset = 1;
 
-    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ) {
+    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset) {
         this.length = length;
         this.width = width;
         this.minWaterZ = minWaterZ;
         this.maxWaterZ = maxWaterZ;
+        this.widthOffset = widthOffset;
+    }
+
+    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ) {
+        this(length, width, minWaterZ, maxWaterZ, 0);
     }
 }

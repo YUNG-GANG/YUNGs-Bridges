@@ -24,7 +24,8 @@ public class OakBridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfi
         YBModProcessors.STAIR_PROCESSOR,
         YBModProcessors.FENCE_PROCESSOR,
         YBModProcessors.PLANKS_PROCESSOR,
-        YBModProcessors.SLAB_PROCESSOR
+        YBModProcessors.SLAB_PROCESSOR,
+        YBModProcessors.STONE_BRICK_PROCESSOR
     );
 
     public OakBridgeFeature() {

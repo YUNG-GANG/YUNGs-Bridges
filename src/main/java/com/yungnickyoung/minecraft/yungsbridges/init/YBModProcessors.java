@@ -16,6 +16,7 @@ public class YBModProcessors {
     public static ITemplateFeatureProcessor FENCE_PROCESSOR = register(new OakFenceProcessor());
     public static ITemplateFeatureProcessor PLANKS_PROCESSOR = register(new OakPlanksProcessor());
     public static ITemplateFeatureProcessor SLAB_PROCESSOR = register(new OakSlabProcessor());
+    public static ITemplateFeatureProcessor STONE_BRICK_PROCESSOR = register(new StoneBrickProcessor());
 
     private static ITemplateFeatureProcessor register(ITemplateFeatureProcessor processor) {
         PROCESSORS.add(processor);

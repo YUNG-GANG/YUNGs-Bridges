@@ -45,8 +45,12 @@ public class YBModFeatures {
 
         // Add bridges to non-blacklisted river biomes
         if (event.getCategory() == Biome.Category.RIVER) {
-            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_OAK_5);
-            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_OAK_7);
+            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_OAK_13);
+            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_OAK_15);
+            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_STONE_24);
+            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_STONE_22);
+            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_STONE_16);
+            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_STONE_15);
         }
     }
 

@@ -43,7 +43,7 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
                     }
                     if (isAllWater) {
                         // Valid position for bridge!
-                        return Stream.of(new BlockPos(startingPos.getX() - config.width / 2, seaLevel, pos.getZ() + startZ + 1));
+                        return Stream.of(new BlockPos(startingPos.getX() - config.width / 2 - config.widthOffset, seaLevel, pos.getZ() + startZ + 1));
                     }
                 }
             }
