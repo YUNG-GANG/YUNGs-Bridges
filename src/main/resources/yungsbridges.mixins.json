@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.yungnickyoung.minecraft.yungsbridges.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "yungsbridges.refmap.json",
+  "mixins": [
+    "BiomeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

@@ -1,5 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 
+import com.yungnickyoung.minecraft.yungsbridges.world.BridgeContext;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -19,6 +20,12 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
 
     @Override
     public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, BridgePlacementConfig config, BlockPos pos) {
+        // Don't generate if we have already generated a bridge for this chunk
+        BridgeContext context = BridgeContext.get();
+        if (context == null || context.hasSpawned()) {
+            return Stream.empty();
+        }
+
         // Mutable that is always at sea level
         BlockPos.Mutable seaLevelMutable = pos.toMutable();
         int seaLevel = helper.func_242895_b() - 1;
@@ -43,6 +50,7 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
                     }
                     if (isAllWater) {
                         // Valid position for bridge!
+                        context.setSpawned();
                         return Stream.of(new BlockPos(startingPos.getX() - config.width / 2 - config.widthOffset, seaLevel, pos.getZ() + startZ + 1));
                     }
                 }
