@@ -19,7 +19,7 @@ public class OakFenceProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden fence for biome variants
         for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.OAK_FENCE)) {
-            if (rand.nextFloat() < .5f) {
+            if (rand.nextFloat() < .75f) {
                 BlockState fenceBlock = getFenceVariant(biome, blockInfo.state);
 
                 // Adjust neighboring fences
