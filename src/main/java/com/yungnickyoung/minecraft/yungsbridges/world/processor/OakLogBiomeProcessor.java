@@ -12,7 +12,11 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
-public class OakLogProcessor implements ITemplateFeatureProcessor {
+/**
+ * Processor responsible for replacing oak logs based on biome.
+ * Also randomly replaces some logs with air to simulate rot.
+ */
+public class OakLogBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
         Biome biome = world.getBiome(cornerPos);

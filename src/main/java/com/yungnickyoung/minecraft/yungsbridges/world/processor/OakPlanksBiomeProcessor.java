@@ -10,7 +10,10 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
-public class OakPlanksProcessor implements ITemplateFeatureProcessor {
+/**
+ * Processor responsible for replacing oak planks based on biome.
+ */
+public class OakPlanksBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
         Biome biome = world.getBiome(cornerPos);

@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.yungsbridges.init;
 
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
-import com.yungnickyoung.minecraft.yungsbridges.world.feature.oak.OakBridgeFeature;
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeature;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
@@ -21,7 +21,7 @@ public class YBModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, YungsBridges.MOD_ID);
 
     /* Features */
-    public static final RegistryObject<Feature<BridgeFeatureConfig>> BRIDGE_OAK = register("bridge_oak", OakBridgeFeature::new);
+    public static final RegistryObject<Feature<BridgeFeatureConfig>> BRIDGE_OAK = register("bridge_oak", BridgeFeature::new);
 
     public static void init () {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());

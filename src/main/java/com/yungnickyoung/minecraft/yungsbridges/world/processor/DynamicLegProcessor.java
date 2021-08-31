@@ -13,6 +13,9 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
+/**
+ * Processor responsible for all dynamic leg generation below bridges.
+ */
 public class DynamicLegProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {

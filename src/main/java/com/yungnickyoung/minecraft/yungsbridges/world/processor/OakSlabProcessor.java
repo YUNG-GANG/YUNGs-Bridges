@@ -11,6 +11,9 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
+/**
+ * Processor responsible for replacing oak slabs based on biome.
+ */
 public class OakSlabProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {

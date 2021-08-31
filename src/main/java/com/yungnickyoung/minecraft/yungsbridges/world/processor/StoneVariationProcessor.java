@@ -9,7 +9,11 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
-public class StoneBrickProcessor implements ITemplateFeatureProcessor {
+/**
+ * Processor responsible for randomizing stone-based blocks.
+ * Adds random variation to each structure it processes.
+ */
+public class StoneVariationProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
         // Add variation to stone bricks

@@ -1,10 +1,8 @@
-package com.yungnickyoung.minecraft.yungsbridges.world.feature.oak;
+package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
 import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModProcessors;
-import com.yungnickyoung.minecraft.yungsbridges.world.feature.AbstractTemplateFeature;
-import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -14,21 +12,21 @@ import net.minecraft.world.gen.feature.template.Template;
 import java.util.List;
 import java.util.Random;
 
-public class OakBridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> {
+public class BridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> {
     /**
      * List of processors this template feature will use right after generation.
      */
     private static final List<ITemplateFeatureProcessor> PROCESSORS = Lists.newArrayList(
         YBModProcessors.LEG_PROCESSOR,
-        YBModProcessors.LOG_PROCESSOR,
-        YBModProcessors.STAIR_PROCESSOR,
-        YBModProcessors.FENCE_PROCESSOR,
-        YBModProcessors.PLANKS_PROCESSOR,
-        YBModProcessors.SLAB_PROCESSOR,
-        YBModProcessors.STONE_BRICK_PROCESSOR
+        YBModProcessors.LOG_BIOME_PROCESSOR,
+        YBModProcessors.STAIR_BIOME_PROCESSOR,
+        YBModProcessors.FENCE_BIOME_PROCESSOR,
+        YBModProcessors.PLANKS_BIOME_PROCESSOR,
+        YBModProcessors.SLAB_BIOME_PROCESSOR,
+        YBModProcessors.STONE_VARIATION_PROCESSOR
     );
 
-    public OakBridgeFeature() {
+    public BridgeFeature() {
         super(BridgeFeatureConfig.CODEC);
     }
 

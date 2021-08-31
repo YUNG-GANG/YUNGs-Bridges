@@ -28,16 +28,24 @@ public abstract class AbstractTemplateFeature<C extends IFeatureConfig> extends 
         this.processors = useProcessors();
     }
 
+    /**
+     * Generates the template feature with default placement settings and applies processors.
+     * @param id ID of this template feature (i.e. namespaced path to the structure NBT)
+     * @param world ISeedReader
+     * @param rand Random
+     * @param pos The position to generate the feature at. This will be the corner of the feature.
+     * @return The generated Template
+     */
     protected Template createTemplate(ResourceLocation id, ISeedReader world, Random rand, BlockPos pos) {
         return createTemplateWithPlacement(id, world, rand, pos, new PlacementSettings());
     }
 
     /**
      * Generates the template feature and applies processors.
-     * @param id ID of this template feature (i.e. namespaced path to the structure)
+     * @param id ID of this template feature (i.e. namespaced path to the structure NBT)
      * @param world ISeedReader
      * @param rand Random
-     * @param pos The position to generate the feature at. This will be the center of the feature.
+     * @param pos The position to generate the feature at. This will be the corner of the feature.
      * @param placement Placement settings for the feature
      * @return The generated Template
      */
@@ -54,10 +62,6 @@ public abstract class AbstractTemplateFeature<C extends IFeatureConfig> extends 
             YungsBridges.LOGGER.warn("Failed to create invalid feature {}", id);
             return null;
         }
-
-        // Find the corner from which we should spawn the template.
-        // We are using the pos parameter passed in as the center of the feature, so we must offset.
-//        BlockPos cornerPos = pos.add(-template.getSize().getX() / 2, 0, -template.getSize().getZ() / 2);
 
         // Create & place template
         template.func_237144_a_(world, pos, placement, rand);

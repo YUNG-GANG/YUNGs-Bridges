@@ -11,7 +11,10 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
-public class OakStairProcessor implements ITemplateFeatureProcessor {
+/**
+ * Processor responsible for replacing oak stairs based on biome.
+ */
+public class OakStairBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
         Biome biome = world.getBiome(cornerPos);

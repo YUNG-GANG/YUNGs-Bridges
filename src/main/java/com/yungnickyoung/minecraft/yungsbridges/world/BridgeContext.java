@@ -4,7 +4,8 @@ import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 
 /**
- * Caches information during feature generation.
+ * Caches bridge spawning information during feature generation.
+ * Used to prevent multiple bridges spawning in the same chunk.
  */
 public class BridgeContext {
     private static final ThreadLocal<BridgeContext> CONTEXT = new ThreadLocal<>();
@@ -23,17 +24,6 @@ public class BridgeContext {
     public void setSpawned() {
         spawned.clear();
         spawned = new WeakReference<>(true);
-    }
-
-    /**
-     * Consume the currently held BridgeContext.
-     * A null value means the context has already been consumed.
-     */
-    @Nullable
-    public static BridgeContext pop() {
-        BridgeContext context = CONTEXT.get();
-        CONTEXT.set(null);
-        return context;
     }
 
     /**

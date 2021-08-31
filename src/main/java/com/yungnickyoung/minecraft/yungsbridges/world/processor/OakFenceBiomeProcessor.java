@@ -12,14 +12,18 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.Random;
 
-public class OakFenceProcessor implements ITemplateFeatureProcessor {
+/**
+ * Processor responsible for replacing oak fences based on biome.
+ * Also randomly replaces some fences with air to simulate rot.
+ */
+public class OakFenceBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
         Biome biome = world.getBiome(cornerPos);
 
         // Replace wooden fence for biome variants
         for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.OAK_FENCE)) {
-            if (rand.nextFloat() < .75f) {
+            if (rand.nextFloat() < .75f) { // Place fence
                 BlockState fenceBlock = getFenceVariant(biome, blockInfo.state);
 
                 // Adjust neighboring fences
@@ -28,7 +32,7 @@ public class OakFenceProcessor implements ITemplateFeatureProcessor {
                     fenceBlock = fenceBlock.with(FenceBlock.NORTH, false);
                 }
                 world.setBlockState(blockInfo.pos, fenceBlock, 2);
-            } else {
+            } else { // Replace fence w/ air
                 world.setBlockState(blockInfo.pos, Blocks.AIR.getDefaultState(), 2);
                 // Adjust neighboring fences
                 BlockPos neighborPos = blockInfo.pos.offset(Direction.NORTH);
