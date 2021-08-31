@@ -17,5 +17,19 @@ public class LanternRotProcessor implements ITemplateFeatureProcessor {
                 world.setBlockState(blockInfo.pos, Blocks.AIR.getDefaultState(), 2);
             }
         }
+
+        // Random chance to replace some torches w/ air
+        for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.TORCH)) {
+            if (rand.nextFloat() < .5f) {
+                world.setBlockState(blockInfo.pos, Blocks.AIR.getDefaultState(), 2);
+            }
+        }
+
+        // Random chance to replace some wall torches w/ air
+        for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.WALL_TORCH)) {
+            if (rand.nextFloat() < .5f) {
+                world.setBlockState(blockInfo.pos, Blocks.AIR.getDefaultState(), 2);
+            }
+        }
     }
 }

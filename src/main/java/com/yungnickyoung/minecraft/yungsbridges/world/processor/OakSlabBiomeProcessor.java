@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * Processor responsible for replacing oak slabs based on biome.
  */
-public class OakSlabProcessor implements ITemplateFeatureProcessor {
+public class OakSlabBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
         Biome biome = world.getBiome(cornerPos);

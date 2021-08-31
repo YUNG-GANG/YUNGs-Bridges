@@ -15,7 +15,7 @@ public class YBModProcessors {
     public static ITemplateFeatureProcessor STAIR_BIOME_PROCESSOR = register(new OakStairBiomeProcessor());
     public static ITemplateFeatureProcessor FENCE_BIOME_PROCESSOR = register(new OakFenceBiomeProcessor());
     public static ITemplateFeatureProcessor PLANKS_BIOME_PROCESSOR = register(new OakPlanksBiomeProcessor());
-    public static ITemplateFeatureProcessor SLAB_BIOME_PROCESSOR = register(new OakSlabProcessor());
+    public static ITemplateFeatureProcessor SLAB_BIOME_PROCESSOR = register(new OakSlabBiomeProcessor());
     public static ITemplateFeatureProcessor STONE_VARIATION_PROCESSOR = register(new StoneVariationProcessor());
     public static ITemplateFeatureProcessor LANTERN_ROT_PROCESSOR = register(new LanternRotProcessor());
 

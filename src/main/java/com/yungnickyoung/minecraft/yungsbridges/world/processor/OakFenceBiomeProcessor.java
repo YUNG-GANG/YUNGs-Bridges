@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -23,7 +24,7 @@ public class OakFenceBiomeProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden fence for biome variants
         for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.OAK_FENCE)) {
-            if (rand.nextFloat() < .75f) { // Place fence
+            if (rand.nextFloat() < .75f || world.getBlockState(blockInfo.pos.up()).isSolid()) { // Place fence
                 BlockState fenceBlock = getFenceVariant(biome, blockInfo.state);
 
                 // Adjust neighboring fences

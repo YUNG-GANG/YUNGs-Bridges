@@ -11,7 +11,8 @@ public class BridgePlacementConfig implements IPlacementConfig {
             Codec.INT.fieldOf("width").forGetter((config) -> config.width),
             Codec.INT.fieldOf("minWaterZ").forGetter((config) -> config.minWaterZ),
             Codec.INT.fieldOf("maxWaterZ").forGetter((config) -> config.maxWaterZ),
-            Codec.INT.fieldOf("widthOffset").forGetter((config) -> config.widthOffset)
+            Codec.INT.fieldOf("widthOffset").forGetter((config) -> config.widthOffset),
+            Codec.INT.fieldOf("numSolidBlocksNeeded").forGetter((config) -> config.numSolidBlocksNeeded)
         ).apply(codec, BridgePlacementConfig::new));
 
     /** Length of the bridge. This is usually the exact length of the bridge NBT structure itself. */
@@ -33,15 +34,19 @@ public class BridgePlacementConfig implements IPlacementConfig {
      */
     public int widthOffset;
 
-    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset) {
+    /** The number of sea-level blocks on each end of the bridge that must be solid */
+    public final int numSolidBlocksNeeded;
+
+    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset, int numSolidBlocksNeeded) {
         this.length = length;
         this.width = width;
         this.minWaterZ = minWaterZ;
         this.maxWaterZ = maxWaterZ;
         this.widthOffset = widthOffset;
+        this.numSolidBlocksNeeded = numSolidBlocksNeeded;
     }
 
     public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ) {
-        this(length, width, minWaterZ, maxWaterZ, 0);
+        this(length, width, minWaterZ, maxWaterZ, 0, 1);
     }
 }
