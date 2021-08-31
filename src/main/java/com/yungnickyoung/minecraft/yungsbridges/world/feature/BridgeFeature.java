@@ -23,7 +23,8 @@ public class BridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> 
         YBModProcessors.FENCE_BIOME_PROCESSOR,
         YBModProcessors.PLANKS_BIOME_PROCESSOR,
         YBModProcessors.SLAB_BIOME_PROCESSOR,
-        YBModProcessors.STONE_VARIATION_PROCESSOR
+        YBModProcessors.STONE_VARIATION_PROCESSOR,
+        YBModProcessors.LANTERN_ROT_PROCESSOR
     );
 
     public BridgeFeature() {
