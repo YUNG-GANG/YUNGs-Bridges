@@ -7,43 +7,53 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.SingleRandomFeature;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class YBModConfiguredFeatures {
-    public static List<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = new ArrayList<>();
+    private static final List<Supplier<ConfiguredFeature<?, ?>>> bridges = new ArrayList<>();
 
-    public static final ConfiguredFeature<?, ?> BRIDGE_STONE_31 = addBridge("bridge/stone/31_0", new BridgePlacementConfig(31, 5, 4, 28, 2, 3), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_WOOD_27  = addBridge("bridge/wood/27_0", new BridgePlacementConfig(27, 5, 2, 26, 0, 2), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_STONE_24 = addBridge("bridge/stone/24_0", new BridgePlacementConfig(24, 5, 2, 23, 0, 2), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_STONE_22 = addBridge("bridge/stone/22_0", new BridgePlacementConfig(22, 5, 2, 21, 0, 2), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_WOOD_17  = addBridge("bridge/wood/17_0", new BridgePlacementConfig(17, 4, 2, 16, 0, 2), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_STONE_16 = addBridge("bridge/stone/16_0", new BridgePlacementConfig(16, 5, 2, 15, 0, 2), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_STONE_15 = addBridge("bridge/stone/15_1", new BridgePlacementConfig(15, 5, 2, 14, 1, 2), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_WOOD_15  = addBridge("bridge/wood/15_0", new BridgePlacementConfig(15, 3, 3, 13), 1);
-    public static final ConfiguredFeature<?, ?> BRIDGE_WOOD_13  = addBridge("bridge/wood/13_0", new BridgePlacementConfig(13, 3, 3, 11), 1);
-
-    public static void registerConfiguredFeatures() {
-        registerConfiguredFeature(BRIDGE_STONE_31, "bridge_stone_31");
-        registerConfiguredFeature(BRIDGE_WOOD_27, "bridge_wood_27");
-        registerConfiguredFeature(BRIDGE_STONE_24, "bridge_stone_24");
-        registerConfiguredFeature(BRIDGE_STONE_22, "bridge_stone_22");
-        registerConfiguredFeature(BRIDGE_STONE_16, "bridge_stone_16");
-        registerConfiguredFeature(BRIDGE_STONE_15, "bridge_stone_15");
-        registerConfiguredFeature(BRIDGE_WOOD_17, "bridge_wood_17");
-        registerConfiguredFeature(BRIDGE_WOOD_15, "bridge_wood_15");
-        registerConfiguredFeature(BRIDGE_WOOD_13, "bridge_wood_13");
+    static {
+        addBridge("bridge/stone/31_0", new BridgePlacementConfig(31, 5, 4, 28).widthOffset(2).solidBlocks(3), 1);
+        addBridge("bridge/wood/27_0",  new BridgePlacementConfig(27, 5, 2, 26).solidBlocks(2), 1);
+        addBridge("bridge/stone/24_0", new BridgePlacementConfig(24, 5, 2, 23).solidBlocks(2), 1);
+        addBridge("bridge/stone/22_0", new BridgePlacementConfig(22, 5, 2, 21).solidBlocks(2), 1);
+        addBridge("bridge/wood/17_0",  new BridgePlacementConfig(17, 4, 2, 16).solidBlocks(2), 1);
+        addBridge("bridge/stone/16_0", new BridgePlacementConfig(16, 5, 2, 15).solidBlocks(2), 1);
+        addBridge("bridge/stone/15_1", new BridgePlacementConfig(15, 5, 2, 14).widthOffset(1).solidBlocks(2), 1);
+        addBridge("bridge/wood/15_0",  new BridgePlacementConfig(15, 3, 3, 13), 1);
+        addBridge("bridge/wood/13_0",  new BridgePlacementConfig(13, 3, 3, 11), 1);
     }
 
-    private static ConfiguredFeature<?, ?> addBridge(String id, BridgePlacementConfig placementConfig, int chance) {
+    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE = Feature.SIMPLE_RANDOM_SELECTOR
+        .withConfiguration(new SingleRandomFeature(bridges));
+
+    public static void registerConfiguredFeatures() {
+        registerConfiguredFeature(BRIDGE_LIST_FEATURE, "bridge_list");
+    }
+
+    private static void addBridge(String id, BridgePlacementConfig placementConfig, int chance) {
+        BridgeFeatureConfig featureConfig = new BridgeFeatureConfig(id);
+
         ConfiguredFeature<?, ?> feature = YBModFeatures.BRIDGE.get()
-            .withConfiguration(new BridgeFeatureConfig(id))
+            .withConfiguration(featureConfig)
             .withPlacement(YBModPlacements.BRIDGE.get().configure(placementConfig))
             .chance(chance)
-            .withPlacement(YBModConfiguredPlacements.RNG_INITIALIZER);
-        CONFIGURED_FEATURES.add(feature);
-        return feature;
+            .withPlacement(YBModPlacements.RNG_INITIALIZER.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
+
+        ConfiguredFeature<?, ?> rotatedFeature = YBModFeatures.BRIDGE.get()
+            .withConfiguration(featureConfig.rotatedCopy())
+            .withPlacement(YBModPlacements.BRIDGE.get().configure(placementConfig.rotatedCopy()))
+            .chance(chance)
+            .withPlacement(YBModPlacements.RNG_INITIALIZER.get().configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
+
+        bridges.add(() -> feature);
+        bridges.add(() -> rotatedFeature);
     }
 
     private static void registerConfiguredFeature(ConfiguredFeature<?, ?> feature, String id) {

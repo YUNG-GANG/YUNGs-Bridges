@@ -12,7 +12,8 @@ public class BridgePlacementConfig implements IPlacementConfig {
             Codec.INT.fieldOf("minWaterZ").forGetter((config) -> config.minWaterZ),
             Codec.INT.fieldOf("maxWaterZ").forGetter((config) -> config.maxWaterZ),
             Codec.INT.fieldOf("widthOffset").forGetter((config) -> config.widthOffset),
-            Codec.INT.fieldOf("numSolidBlocksNeeded").forGetter((config) -> config.numSolidBlocksNeeded)
+            Codec.INT.fieldOf("numSolidBlocksNeeded").forGetter((config) -> config.numSolidBlocksNeeded),
+            Codec.BOOL.fieldOf("northSouth").forGetter((config) -> config.northSouth)
         ).apply(codec, BridgePlacementConfig::new));
 
     /** Length of the bridge. This is usually the exact length of the bridge NBT structure itself. */
@@ -35,18 +36,42 @@ public class BridgePlacementConfig implements IPlacementConfig {
     public int widthOffset;
 
     /** The number of sea-level blocks on each end of the bridge that must be solid */
-    public final int numSolidBlocksNeeded;
+    public int numSolidBlocksNeeded;
 
-    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset, int numSolidBlocksNeeded) {
+    /** Rotation of the bridge. True if bridge should go north-south, false if east-west. */
+    public boolean northSouth;
+
+    public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset, int numSolidBlocksNeeded, boolean northSouth) {
         this.length = length;
         this.width = width;
         this.minWaterZ = minWaterZ;
         this.maxWaterZ = maxWaterZ;
         this.widthOffset = widthOffset;
         this.numSolidBlocksNeeded = numSolidBlocksNeeded;
+        this.northSouth = northSouth;
     }
 
     public BridgePlacementConfig(int length, int width, int minWaterZ, int maxWaterZ) {
-        this(length, width, minWaterZ, maxWaterZ, 0, 1);
+        this(length, width, minWaterZ, maxWaterZ, 0, 1, true);
+    }
+
+    public BridgePlacementConfig(BridgePlacementConfig other) {
+        this(other.length, other.width, other.minWaterZ, other.maxWaterZ, other.widthOffset, other.numSolidBlocksNeeded, other.northSouth);
+    }
+
+    public BridgePlacementConfig widthOffset(int widthOffset) {
+        this.widthOffset = widthOffset;
+        return this;
+    }
+
+    public BridgePlacementConfig solidBlocks(int numSolidBlocksNeeded) {
+        this.numSolidBlocksNeeded = numSolidBlocksNeeded;
+        return this;
+    }
+
+    public BridgePlacementConfig rotatedCopy() {
+        BridgePlacementConfig configCopy = new BridgePlacementConfig(this);
+        configCopy.northSouth = !this.northSouth;
+        return configCopy;
     }
 }

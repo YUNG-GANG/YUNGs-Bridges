@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 
 import com.google.common.collect.Lists;
-import com.yungnickyoung.minecraft.yungsbridges.world.BridgeContext;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -28,25 +27,23 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
 
     @Override
     public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, BridgePlacementConfig config, BlockPos pos) {
-        // Don't generate if we have already generated a bridge for this chunk
-        BridgeContext context = BridgeContext.get();
-        if (context == null || context.hasSpawned()) {
-            return Stream.empty();
-        }
-
         // Mutable that is always at sea level
         BlockPos.Mutable seaLevelMutable = pos.toMutable();
         int seaLevel = helper.func_242895_b() - 1;
         seaLevelMutable.setY(seaLevel);
 
         // Scan the grid, looking for suitable locations
-        for (int x = 1; x < 16; x++) {
-            for (int startZ = 0; startZ < 16; startZ++) {
+        for (int candidateMiddleMinorAxisOffset = 0; candidateMiddleMinorAxisOffset < 16; candidateMiddleMinorAxisOffset++) {
+            for (int candidateStartMajorAxisOffset = 0; candidateStartMajorAxisOffset < 16; candidateStartMajorAxisOffset++) {
                 // Candidate starting position for the bridge
-                BlockPos startingPos = new BlockPos(pos.getX() + x, seaLevel, pos.getZ() + startZ);
+                BlockPos startingPos = config.northSouth
+                    ? new BlockPos(pos.getX() + candidateMiddleMinorAxisOffset, seaLevel, pos.getZ() + candidateStartMajorAxisOffset)
+                    : new BlockPos(pos.getX() + candidateStartMajorAxisOffset, seaLevel, pos.getZ() + candidateMiddleMinorAxisOffset);
 
                 // Corresponding ending position for the current candidate starting position.
-                BlockPos endingPos = new BlockPos(pos.getX() + x, seaLevel, pos.getZ() + startZ + config.length + 1);
+                BlockPos endingPos = config.northSouth
+                    ? new BlockPos(pos.getX() + candidateMiddleMinorAxisOffset, seaLevel, pos.getZ() + candidateStartMajorAxisOffset + config.length + 1)
+                    : new BlockPos(pos.getX() + candidateStartMajorAxisOffset + config.length + 1, seaLevel, pos.getZ() + candidateMiddleMinorAxisOffset);
 
                 // Either side of the bridge must lead to solid land
                 if (!
@@ -63,9 +60,16 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
 
                 // Check starting side
                 for (int direction : Lists.newArrayList(-1, 1)) {
-                    for (int solidX = 1; solidX <= config.width / 2; solidX++) {
-                        int offsetX = direction * solidX;
-                        seaLevelMutable.setPos(startingPos.getX() + offsetX, startingPos.getY(), startingPos.getZ());
+                    for (int minorAxisSolidDist = 1; minorAxisSolidDist <= config.width / 2; minorAxisSolidDist++) {
+                        int minorAxisSolidOffset = direction * minorAxisSolidDist;
+
+                        // Update mutable position
+                        if (config.northSouth) {
+                            seaLevelMutable.setPos(startingPos.getX() + minorAxisSolidOffset, startingPos.getY(), startingPos.getZ());
+                        } else {
+                            seaLevelMutable.setPos(startingPos.getX(), startingPos.getY(), startingPos.getZ() + minorAxisSolidOffset);
+                        }
+
                         if (helper.func_242894_a(seaLevelMutable).isSolid() && helper.func_242893_a(Heightmap.Type.WORLD_SURFACE, seaLevelMutable.getX(), seaLevelMutable.getZ()) <= seaLevel + 1) {
                             numSolidBlocks++;
                         } else {
@@ -80,9 +84,16 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
 
                 // Check ending side
                 for (int direction : Lists.newArrayList(-1, 1)) {
-                    for (int solidX = 1; solidX <= config.width / 2; solidX++) {
-                        int offsetX = direction * solidX;
-                        seaLevelMutable.setPos(endingPos.getX() + offsetX, endingPos.getY(), endingPos.getZ());
+                    for (int minorAxisSolidDist = 1; minorAxisSolidDist <= config.width / 2; minorAxisSolidDist++) {
+                        int minorAxisSolidOffset = direction * minorAxisSolidDist;
+
+                        // Update mutable position
+                        if (config.northSouth) {
+                            seaLevelMutable.setPos(endingPos.getX() + minorAxisSolidOffset, endingPos.getY(), endingPos.getZ());
+                        } else {
+                            seaLevelMutable.setPos(endingPos.getX(), endingPos.getY(), endingPos.getZ() + minorAxisSolidOffset);
+                        }
+
                         if (helper.func_242894_a(seaLevelMutable).isSolid() && helper.func_242893_a(Heightmap.Type.WORLD_SURFACE, seaLevelMutable.getX(), seaLevelMutable.getZ()) <= seaLevel + 1) {
                             numSolidBlocks++;
                         } else {
@@ -95,9 +106,15 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
 
                 // Middle blocks must all be water, starting with the positions designated by minWaterZ and maxWaterZ from the config
                 boolean isAllWater = true;
-                for (int waterX = -config.width / 2; waterX <= config.width / 2; waterX++) {
-                    for (int waterZ = config.minWaterZ; waterZ <= config.maxWaterZ; waterZ++) {
-                        seaLevelMutable.setPos(startingPos.getX() + waterX, seaLevel, startingPos.getZ() + waterZ);
+                for (int minorAxisWaterOffset = -config.width / 2; minorAxisWaterOffset <= config.width / 2; minorAxisWaterOffset++) {
+                    for (int majorAxisWaterOffset = config.minWaterZ; majorAxisWaterOffset <= config.maxWaterZ; majorAxisWaterOffset++) {
+                        // Update mutable position
+                        if (config.northSouth) {
+                            seaLevelMutable.setPos(startingPos.getX() + minorAxisWaterOffset, seaLevel, startingPos.getZ() + majorAxisWaterOffset);
+                        } else {
+                            seaLevelMutable.setPos(startingPos.getX() + majorAxisWaterOffset, seaLevel, startingPos.getZ() + minorAxisWaterOffset);
+                        }
+
                         if (helper.func_242894_a(seaLevelMutable).getMaterial() != Material.WATER) {
                             isAllWater = false;
                             break;
@@ -106,8 +123,9 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
                 }
                 if (isAllWater) {
                     // Valid position for bridge!
-                    context.setSpawned(); // Set context so that no other bridges will spawn in this chunk
-                    return Stream.of(new BlockPos(startingPos.getX() - config.width / 2 - config.widthOffset, seaLevel, pos.getZ() + startZ + 1));
+                    return config.northSouth
+                        ? Stream.of(new BlockPos(startingPos.getX() - config.width / 2 - config.widthOffset, seaLevel, startingPos.getZ() + 1))
+                        : Stream.of(new BlockPos(startingPos.getX() + 1, seaLevel, startingPos.getZ() + config.width / 2 + config.widthOffset));
                 }
             }
         }

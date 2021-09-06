@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModProcessors;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 
 import java.util.List;
@@ -44,46 +46,16 @@ public class BridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> 
         BlockPos.Mutable startPos = pos.toMutable();
         startPos.setY(world.getSeaLevel()); // Starting pos will be center of bridge
 
-        // Determine valid bridge orientation
-//        Direction bridgeDirection = null;
-//        for (Direction dir : Direction.Plane.HORIZONTAL) {
-//            BlockPos startingPosCandidate = startPos.offset(dir, 5);
-//            BlockPos endingPosCandidate = startPos.offset(dir.getOpposite(), 5);
-//
-//            if (world.getBlockState(startingPosCandidate).isSolid() && world.getBlockState(endingPosCandidate).isSolid()) {
-//                Vector3i facingVec = endingPosCandidate.subtract(startingPosCandidate);
-//                bridgeDirection = Direction.getFacingFromVector(facingVec.getX(), facingVec.getY(), facingVec.getZ());
-//                break;
-//            }
-//        }
-//
-//        if (bridgeDirection == null) return false;
-//
-//        // Determine rotation for placement
-//        Rotation featureRotation = null;
-//        switch (bridgeDirection) {
-//            case NORTH:
-//                featureRotation = Rotation.NONE;
-//                break;
-//            case EAST:
-//                featureRotation = Rotation.CLOCKWISE_90;
-//                break;
-//            case SOUTH:
-//                featureRotation = Rotation.CLOCKWISE_180;
-//                break;
-//            case WEST:
-//                featureRotation = Rotation.COUNTERCLOCKWISE_90;
-//                break;
-//        }
-//
-//        if (featureRotation == null) return false;
-//
         // Generate the feature. Implicitly applies processors after generation.
-        Template template = this.createTemplate(config.id, world, rand, startPos);
+        PlacementSettings placementSettings = new PlacementSettings();
+        if (!config.northSouth) placementSettings.setRotation(Rotation.COUNTERCLOCKWISE_90);
+        Template template = this.createTemplateWithPlacement(config.id, world, rand, startPos, placementSettings);
 
 //        world.setBlockState(pos, Blocks.DIAMOND_BLOCK.getDefaultState(), 2);
-//        world.setBlockState(pos.offset(bridgeDirection, 5), Blocks.RED_WOOL.getDefaultState(), 2);
-//        world.setBlockState(pos.offset(bridgeDirection.getOpposite(), 5), Blocks.LIME_WOOL.getDefaultState(), 2);
+//        BlockPos endingPos = config.northSouth
+//            ? new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1)
+//            : new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ());
+//        world.setBlockState(endingPos, Blocks.EMERALD_BLOCK.getDefaultState(), 2);
 
         YungsBridges.LOGGER.info("/tp {} {} {}", pos.getX(), pos.getY(), pos.getZ());
 
