@@ -33,7 +33,7 @@ public class BridgePlacement extends Placement<BridgePlacementConfig> {
         seaLevelMutable.setY(seaLevel);
 
         // Scan the grid, looking for suitable locations
-        for (int candidateMiddleMinorAxisOffset = 0; candidateMiddleMinorAxisOffset < 16; candidateMiddleMinorAxisOffset++) {
+        for (int candidateMiddleMinorAxisOffset = config.width / 2 + config.widthOffset + 1; candidateMiddleMinorAxisOffset < 16; candidateMiddleMinorAxisOffset++) {
             for (int candidateStartMajorAxisOffset = 0; candidateStartMajorAxisOffset < 16; candidateStartMajorAxisOffset++) {
                 // Candidate starting position for the bridge
                 BlockPos startingPos = config.northSouth
