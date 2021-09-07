@@ -1,8 +1,10 @@
 package com.yungnickyoung.minecraft.yungsbridges.init;
 
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
-import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeature;
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeature;
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeatureConfig;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
@@ -22,6 +24,7 @@ public class YBModFeatures {
 
     /* Features */
     public static final RegistryObject<Feature<BridgeFeatureConfig>> BRIDGE = register("bridge", BridgeFeature::new);
+    public static final RegistryObject<Feature<MultipleAttemptSingleRandomFeatureConfig>> MULTIPLE_ATTEMPT_SINGLE_RANDOM = register("multiple_attempt_single_random", MultipleAttemptSingleRandomFeature::new);
 
     public static void init () {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());

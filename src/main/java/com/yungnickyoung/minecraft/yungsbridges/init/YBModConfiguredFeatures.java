@@ -2,13 +2,12 @@ package com.yungnickyoung.minecraft.yungsbridges.init;
 
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacementConfig;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.SingleRandomFeature;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ public class YBModConfiguredFeatures {
         addBridge("bridge/wood/13_0",  new BridgePlacementConfig(13, 3, 3, 11), 1);
     }
 
-    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE = Feature.SIMPLE_RANDOM_SELECTOR
-        .withConfiguration(new SingleRandomFeature(bridges));
+    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE = YBModFeatures.MULTIPLE_ATTEMPT_SINGLE_RANDOM.get()
+        .withConfiguration(new MultipleAttemptSingleRandomFeatureConfig(bridges));
 
     public static void registerConfiguredFeatures() {
         registerConfiguredFeature(BRIDGE_LIST_FEATURE, "bridge_list");
