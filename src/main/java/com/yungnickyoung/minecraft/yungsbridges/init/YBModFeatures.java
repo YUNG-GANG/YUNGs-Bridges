@@ -44,7 +44,7 @@ public class YBModFeatures {
      */
     private static void onBiomeLoad(BiomeLoadingEvent event) {
         // Ignore blacklisted biomes
-//        if (YungsBridges.blacklistedBiomes.contains(event.getName().toString())) return;
+        if (YungsBridges.blacklistedBiomes.contains(event.getName().toString())) return;
 
         // Add bridges to non-blacklisted river biomes
         if (event.getCategory() == Biome.Category.RIVER) {
