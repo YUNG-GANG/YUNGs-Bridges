@@ -22,12 +22,17 @@ public class YBModConfiguredFeatures {
         addLargeBridge("bridge/stone/31_0", new BridgePlacementConfig(31, 5, 4, 28).widthOffset(2).solidBlocks(3));
         addLargeBridge("bridge/wood/27_0",  new BridgePlacementConfig(27, 5, 2, 26).solidBlocks(2));
         addMediumBridge("bridge/stone/24_0", new BridgePlacementConfig(24, 5, 2, 23).solidBlocks(2));
+        addMediumBridge("bridge/stone/24_0_broken", new BridgePlacementConfig(24, 5, 2, 23).solidBlocks(2));
         addMediumBridge("bridge/stone/22_0", new BridgePlacementConfig(22, 5, 2, 21).solidBlocks(2));
+        addMediumBridge("bridge/stone/22_0_broken", new BridgePlacementConfig(22, 5, 2, 21).solidBlocks(2));
         addSmallBridge("bridge/wood/17_0",  new BridgePlacementConfig(17, 4, 2, 16).solidBlocks(2));
+        addSmallBridge("bridge/wood/17_0_broken",  new BridgePlacementConfig(17, 4, 2, 16).solidBlocks(2));
         addSmallBridge("bridge/stone/16_0", new BridgePlacementConfig(16, 5, 2, 15).solidBlocks(2));
+        addSmallBridge("bridge/stone/16_0_broken", new BridgePlacementConfig(16, 5, 2, 15).solidBlocks(2));
         addSmallBridge("bridge/stone/15_1", new BridgePlacementConfig(15, 5, 2, 14).widthOffset(1).solidBlocks(2));
         addSmallBridge("bridge/wood/15_0",  new BridgePlacementConfig(15, 3, 3, 13));
         addSmallBridge("bridge/wood/13_0",  new BridgePlacementConfig(13, 3, 3, 11));
+        addSmallBridge("bridge/wood/13_0_broken",  new BridgePlacementConfig(13, 3, 3, 11));
     }
 
     public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE = YBModFeatures.MULTIPLE_ATTEMPT_SINGLE_RANDOM.get()

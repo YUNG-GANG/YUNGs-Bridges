@@ -13,14 +13,14 @@ description="${modDescription}"
 logoFile="logo.png"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-bridges"
 
-[[dependencies.betterdungeons]]
+[[dependencies.yungsbridges]]
 modId="forge"
 mandatory=true
 versionRange="[35,)"
 ordering="NONE"
 side="SERVER"
 
-[[dependencies.betterdungeons]]
+[[dependencies.yungsbridges]]
 modId="yungsapi"
 versionRange="[1.16.4-Forge-12,)"
 mandatory=true

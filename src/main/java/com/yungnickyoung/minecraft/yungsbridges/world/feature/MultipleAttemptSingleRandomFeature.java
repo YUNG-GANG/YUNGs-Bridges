@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+/**
+ * Randomly iterates a list of features, attempting to generate each one.
+ * Stops upon successful generation of a feature.
+ */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MultipleAttemptSingleRandomFeature extends Feature<MultipleAttemptSingleRandomFeatureConfig> {
