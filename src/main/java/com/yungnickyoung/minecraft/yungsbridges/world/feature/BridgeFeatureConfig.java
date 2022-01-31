@@ -3,12 +3,11 @@ package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
-public class BridgeFeatureConfig implements IFeatureConfig {
-    public static final Codec<BridgeFeatureConfig> CODEC = RecordCodecBuilder.create((codec) ->
-        codec.group(
+public class BridgeFeatureConfig implements FeatureConfiguration {
+    public static final Codec<BridgeFeatureConfig> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
             ResourceLocation.CODEC.fieldOf("id").forGetter((config) -> config.id),
             Codec.BOOL.fieldOf("northSouth").forGetter((config) -> config.northSouth)
         ).apply(codec, BridgeFeatureConfig::new));

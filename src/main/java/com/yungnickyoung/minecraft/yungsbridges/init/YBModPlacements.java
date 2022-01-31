@@ -1,31 +1,32 @@
 package com.yungnickyoung.minecraft.yungsbridges.init;
 
+import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacement;
-import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacementConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.RngInitializerPlacement;
-import net.minecraft.world.gen.placement.NoPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.function.Supplier;
 
 public class YBModPlacements {
-    /* Registry for deferred registration */
-    public static final DeferredRegister<Placement<?>> PLACEMENTS = DeferredRegister.create(ForgeRegistries.DECORATORS, YungsBridges.MOD_ID);
-
-    /* Placements */
-    public static final RegistryObject<Placement<NoPlacementConfig>> RNG_INITIALIZER = register("rng_initializer", RngInitializerPlacement::new);
-    public static final RegistryObject<Placement<BridgePlacementConfig>> BRIDGE = register("bridge", BridgePlacement::new);
+    public static PlacementModifierType<?> RNG_INITIALIZER_PLACEMENT;
+    public static PlacementModifierType<?> BRIDGE_PLACEMENT;
 
     public static void init() {
-        PLACEMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(YBModPlacements::registerPlacements);
     }
 
-    private static <T extends Placement<?>> RegistryObject<T> register(String name, Supplier<T> feature) {
-        return PLACEMENTS.register(name, feature);
+    private static void registerPlacements(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            RNG_INITIALIZER_PLACEMENT = register("rng_initializer", RngInitializerPlacement.CODEC);
+            BRIDGE_PLACEMENT = register("bridge", BridgePlacement.CODEC);
+        });
+    }
+
+    private static <T extends PlacementModifier> PlacementModifierType<T> register(String name, Codec<T> codec) {
+        return Registry.register(Registry.PLACEMENT_MODIFIERS, new ResourceLocation(YungsBridges.MOD_ID, name), () -> codec);
     }
 }

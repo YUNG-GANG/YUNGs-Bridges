@@ -1,21 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.placement.IPlacementConfig;
-
-public class BridgePlacementConfig implements IPlacementConfig {
-    public static final Codec<BridgePlacementConfig> CODEC = RecordCodecBuilder.create((codec) ->
-        codec.group(
-            Codec.INT.fieldOf("length").forGetter((config) -> config.length),
-            Codec.INT.fieldOf("width").forGetter((config) -> config.width),
-            Codec.INT.fieldOf("minWaterZ").forGetter((config) -> config.minWaterZ),
-            Codec.INT.fieldOf("maxWaterZ").forGetter((config) -> config.maxWaterZ),
-            Codec.INT.fieldOf("widthOffset").forGetter((config) -> config.widthOffset),
-            Codec.INT.fieldOf("numSolidBlocksNeeded").forGetter((config) -> config.numSolidBlocksNeeded),
-            Codec.BOOL.fieldOf("northSouth").forGetter((config) -> config.northSouth)
-        ).apply(codec, BridgePlacementConfig::new));
-
+public class BridgePlacementConfig  {
     /** Length of the bridge. This is usually the exact length of the bridge NBT structure itself. */
     public final int length;
 

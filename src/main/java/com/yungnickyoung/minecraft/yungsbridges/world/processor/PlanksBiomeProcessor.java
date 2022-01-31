@@ -1,11 +1,11 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Random;
 
@@ -14,12 +14,12 @@ import java.util.Random;
  */
 public class PlanksBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
-    public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
-        Biome biome = world.getBiome(cornerPos);
+    public void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
+        Biome biome = level.getBiome(cornerPos);
 
         // Replace wooden planks for biome variants
-        for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.OAK_PLANKS)) {
-            world.setBlockState(blockInfo.pos, getPlanksBiomeVariant(biome), 2);
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_PLANKS)) {
+            level.setBlock(blockInfo.pos, getPlanksBiomeVariant(biome), 2);
         }
     }
 }

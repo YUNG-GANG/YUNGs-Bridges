@@ -1,10 +1,12 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.WorldDecoratingHelper;
-import net.minecraft.world.gen.placement.NoPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
+import com.mojang.serialization.Codec;
+import com.yungnickyoung.minecraft.yungsbridges.init.YBModPlacements;
+import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.placement.PlacementContext;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
@@ -16,16 +18,24 @@ import java.util.stream.Stream;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class RngInitializerPlacement extends Placement<NoPlacementConfig> {
-    public RngInitializerPlacement() {
-        super(NoPlacementConfig.CODEC);
+public class RngInitializerPlacement extends PlacementModifier {
+    private static final RngInitializerPlacement INSTANCE = new RngInitializerPlacement();
+    public static final Codec<RngInitializerPlacement> CODEC = Codec.unit(() -> INSTANCE);
+
+    public static RngInitializerPlacement randomized() {
+        return INSTANCE;
     }
 
     @Override
-    public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, NoPlacementConfig config, BlockPos pos) {
-        long a = rand.nextLong() | 1L;
-        long b = rand.nextLong() | 1L;
-        rand.setSeed(((pos.getX() * a * 951873395712L + 12132586) * (pos.getZ() * b * 132899567841L + 9789717)) ^ 313281234);
-        return Stream.of(pos);
+    public Stream<BlockPos> getPositions(PlacementContext placementContext, Random random, BlockPos blockPos) {
+        long a = random.nextLong() | 1L;
+        long b = random.nextLong() | 1L;
+        random.setSeed(((blockPos.getX() * a * 951873395712L + 12132586) * (blockPos.getZ() * b * 132899567841L + 9789717)) ^ 313281234);
+        return Stream.of(blockPos);
+    }
+
+    @Override
+    public PlacementModifierType<?> type() {
+        return YBModPlacements.RNG_INITIALIZER_PLACEMENT;
     }
 }

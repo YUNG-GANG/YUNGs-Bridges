@@ -3,16 +3,17 @@ package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Random;
  * Includes functionality for applying additional processing after initial generation,
  * similar to Jigsaw structures.
  */
-public abstract class AbstractTemplateFeature<C extends IFeatureConfig> extends Feature<C> {
+public abstract class AbstractTemplateFeature<C extends FeatureConfiguration> extends Feature<C> {
     protected List<ITemplateFeatureProcessor> processors;
 
     public AbstractTemplateFeature(Codec<C> codec) {
@@ -31,43 +32,47 @@ public abstract class AbstractTemplateFeature<C extends IFeatureConfig> extends 
     /**
      * Generates the template feature with default placement settings and applies processors.
      * @param id ID of this template feature (i.e. namespaced path to the structure NBT)
-     * @param world ISeedReader
+     * @param level WorldGenLevel
      * @param rand Random
      * @param pos The position to generate the feature at. This will be the corner of the feature.
      * @return The generated Template
      */
-    protected Template createTemplate(ResourceLocation id, ISeedReader world, Random rand, BlockPos pos) {
-        return createTemplateWithPlacement(id, world, rand, pos, new PlacementSettings());
+    protected StructureTemplate createTemplate(ResourceLocation id, WorldGenLevel level, Random rand, BlockPos pos) {
+        return createTemplateWithPlacement(id, level, rand, pos, new StructurePlaceSettings());
     }
 
     /**
      * Generates the template feature and applies processors.
      * @param id ID of this template feature (i.e. namespaced path to the structure NBT)
-     * @param world ISeedReader
+     * @param level WorldGenLevel
      * @param rand Random
-     * @param pos The position to generate the feature at. This will be the corner of the feature.
+     * @param cornerPos The position to generate the feature at. This will be the corner of the feature.
      * @param placement Placement settings for the feature
      * @return The generated Template
      */
-    protected Template createTemplateWithPlacement(
+    protected StructureTemplate createTemplateWithPlacement(
         ResourceLocation id,
-        ISeedReader world,
+        WorldGenLevel level,
         Random rand,
-        BlockPos pos,
-        PlacementSettings placement
+        BlockPos cornerPos,
+        StructurePlaceSettings placement
     ) {
-        Template template = world.getWorld().getStructureTemplateManager().getTemplate(id);
+        Optional<StructureTemplate> templateOptional = level.getLevel().getStructureManager().get(id);
 
-        if (template == null) { // Unsuccessful creation. Name is probably invalid.
+        if (templateOptional.isEmpty()) { // Unsuccessful creation. Name is probably invalid.
             YungsBridges.LOGGER.warn("Failed to create invalid feature {}", id);
             return null;
         }
 
+        StructureTemplate template = templateOptional.get();
+
+
         // Create & place template
-        template.func_237144_a_(world, pos, placement, rand);
+        BlockPos centerPos = cornerPos.offset(template.getSize().getX() / 2, 0, template.getSize().getZ() / 2);
+        template.placeInWorld(level, cornerPos, centerPos, placement, rand, 2);
 
         // Additional optional processing
-        processors.forEach(processor -> processor.processTemplate(template, world, rand, pos, placement));
+        processors.forEach(processor -> processor.processTemplate(template, level, rand, cornerPos, centerPos, placement));
 
         return template;
     }

@@ -1,23 +1,23 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Random;
 
 public class OptionalWallProcessor implements ITemplateFeatureProcessor {
     private final BlockSetSelector endStoneBrickWallReplacer = new BlockSetSelector(AIR)
-        .addBlock(Blocks.STONE_BRICK_WALL.getDefaultState(), .5f);
+        .addBlock(Blocks.STONE_BRICK_WALL.defaultBlockState(), .5f);
 
     @Override
-    public void processTemplate(Template template, ISeedReader world, Random rand, BlockPos cornerPos, PlacementSettings placementSettings) {
+    public void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
         // Randomly replace end stone brick walls with stone brick walls
-        for (Template.BlockInfo blockInfo : template.func_215381_a(cornerPos, placementSettings, Blocks.END_STONE_BRICK_WALL)) {
-            world.setBlockState(blockInfo.pos, getWallBlockWithState(endStoneBrickWallReplacer.get(rand), blockInfo.state), 2);
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.END_STONE_BRICK_WALL)) {
+            level.setBlock(blockInfo.pos, getWallBlockWithState(endStoneBrickWallReplacer.get(rand), blockInfo.state), 2);
         }
     }
 }

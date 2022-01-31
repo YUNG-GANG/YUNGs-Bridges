@@ -5,16 +5,16 @@ import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeatureConfig;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -33,10 +33,13 @@ public class YBModFeatures {
     }
 
     /**
-     * Register configured features.
+     * Set up features.
      */
     private static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(YBModConfiguredFeatures::registerConfiguredFeatures);
+        event.enqueueWork(() -> {
+            YBModConfiguredFeatures.registerConfiguredFeatures();
+            YBModConfiguredFeatures.registerPlacedFeatures();
+        });
     }
 
     /**
@@ -47,8 +50,8 @@ public class YBModFeatures {
         if (YungsBridges.blacklistedBiomes.contains(event.getName().toString())) return;
 
         // Add bridges to non-blacklisted river biomes
-        if (event.getCategory() == Biome.Category.RIVER) {
-            event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_LIST_FEATURE);
+        if (event.getCategory() == Biome.BiomeCategory.RIVER) {
+            event.getGeneration().getFeatures(GenerationStep.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_LIST_FEATURE_PLACED);
         }
     }
 

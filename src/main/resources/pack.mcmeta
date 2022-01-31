@@ -1,7 +1,6 @@
 {
     "pack": {
         "description": "yungsbridges resources",
-        "pack_format": 6,
-        "_comment": ""
+        "pack_format": 8
     }
 }
