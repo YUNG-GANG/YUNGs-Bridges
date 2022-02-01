@@ -1,32 +1,35 @@
 package com.yungnickyoung.minecraft.yungsbridges.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import com.google.common.collect.Lists;
+import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
-public class YBConfig {
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec SPEC;
+import java.util.ArrayList;
 
-    public static final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
+@Config(name="yungsbridges-fabric-1_18")
+public class YBConfig implements ConfigData {
+    @ConfigEntry.Category("YUNG's Bridges")
+    @ConfigEntry.Gui.TransitiveObject
+    public ConfigYungsBridges yungsBridges = new ConfigYungsBridges();
 
-    public static final ConfigSpawnRates spawnRates;
+    /**
+     * Parses the blacklisted biomes string and updates the stored value.
+     */
+    @Override
+    public void validatePostLoad() {
+        // Biome blacklisting
+        int strLen = yungsBridges.blacklistedBiomes.length();
 
-    static {
-        BUILDER.push("YUNG's Bridges");
+        // Validate the string's format
+        if (strLen < 2 || yungsBridges.blacklistedBiomes.charAt(0) != '[' || yungsBridges.blacklistedBiomes.charAt(strLen - 1) != ']') {
+            YungsBridges.LOGGER.error("INVALID VALUE FOR SETTING 'Blacklisted Biomes'. Using default instead...");
+            YungsBridges.blacklistedBiomes = new ArrayList<>();
+            return;
+        }
 
-        blacklistedBiomes = BUILDER
-            .comment(
-                " List of biomes that will NOT have bridges.\n" +
-                " Only river biomes are considered for bridge placement, so you need not specify non-river biomes here.\n" +
-                " List must be comma-separated values enclosed in square brackets.\n" +
-                " Entries must have the mod namespace included.\n" +
-                " For example: \"[minecraft:river, minecraft:frozen_river]\"\n" +
-                " Default: \"[]\"")
-            .worldRestart()
-            .define("Blacklisted Biomes", "[]");
-
-        spawnRates = new ConfigSpawnRates(BUILDER);
-
-        BUILDER.pop();
-        SPEC = BUILDER.build();
+        // Parse string to list
+        YungsBridges.blacklistedBiomes = Lists.newArrayList(yungsBridges.blacklistedBiomes.substring(1, strLen - 1).split(",\\s*"));
     }
 }

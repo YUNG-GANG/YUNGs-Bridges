@@ -53,7 +53,7 @@ public class BridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> 
         if (!context.config().northSouth) placementSettings.setRotation(Rotation.COUNTERCLOCKWISE_90);
         StructureTemplate template = this.createTemplateWithPlacement(context.config().id, context.level(), context.random(), startPos, placementSettings);
 
-        YungsBridges.LOGGER.info("Bridge at {} {} {}", context.origin().getX(), context.origin().getY(), context.origin().getZ());
+//        YungsBridges.LOGGER.info("Bridge at {} {} {}", context.origin().getX(), context.origin().getY(), context.origin().getZ());
 
         return template != null;
     }

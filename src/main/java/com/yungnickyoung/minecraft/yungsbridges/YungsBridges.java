@@ -1,19 +1,22 @@
 package com.yungnickyoung.minecraft.yungsbridges;
 
+import com.yungnickyoung.minecraft.yungsbridges.config.YBConfig;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModConfig;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModFeatures;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModPlacements;
-import net.minecraftforge.fml.common.Mod;
+import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod(YungsBridges.MOD_ID)
-public class YungsBridges {
+public class YungsBridges implements ModInitializer {
     public static final String MOD_ID = "yungsbridges";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
+    /** YUNG's Bridges config. Uses AutoConfig. **/
+    public static YBConfig CONFIG;
 
     /**
      * List of blacklisted biomes.
@@ -21,11 +24,7 @@ public class YungsBridges {
      */
     public static List<String> blacklistedBiomes = new ArrayList<>();
 
-    public YungsBridges() {
-        init();
-    }
-
-    private void init() {
+    public void onInitialize() {
         YBModConfig.init();
         YBModPlacements.init();
         YBModFeatures.init();

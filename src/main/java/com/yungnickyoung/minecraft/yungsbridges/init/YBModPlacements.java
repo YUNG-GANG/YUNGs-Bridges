@@ -8,22 +8,14 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class YBModPlacements {
     public static PlacementModifierType<?> RNG_INITIALIZER_PLACEMENT;
     public static PlacementModifierType<?> BRIDGE_PLACEMENT;
 
     public static void init() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(YBModPlacements::registerPlacements);
-    }
-
-    private static void registerPlacements(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            RNG_INITIALIZER_PLACEMENT = register("rng_initializer", RngInitializerPlacement.CODEC);
-            BRIDGE_PLACEMENT = register("bridge", BridgePlacement.CODEC);
-        });
+        RNG_INITIALIZER_PLACEMENT = register("rng_initializer", RngInitializerPlacement.CODEC);
+        BRIDGE_PLACEMENT = register("bridge", BridgePlacement.CODEC);
     }
 
     private static <T extends PlacementModifier> PlacementModifierType<T> register(String name, Codec<T> codec) {

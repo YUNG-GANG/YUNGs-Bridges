@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.init;
 
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
-import com.yungnickyoung.minecraft.yungsbridges.config.YBConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacement;
@@ -36,7 +35,7 @@ public class YBModConfiguredFeatures {
         addSmallBridge("bridge/stone/15_1", new BridgePlacementConfig(15, 5, 2, 14).widthOffset(1).solidBlocks(2));
     }
 
-    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE_CONFIGURED = YBModFeatures.MULTIPLE_ATTEMPT_SINGLE_RANDOM.get()
+    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE_CONFIGURED = YBModFeatures.MULTIPLE_ATTEMPT_SINGLE_RANDOM
             .configured(new MultipleAttemptSingleRandomFeatureConfig(PLACED_BRIDGES));
 
     public static final PlacedFeature BRIDGE_LIST_FEATURE_PLACED = BRIDGE_LIST_FEATURE_CONFIGURED
@@ -67,28 +66,28 @@ public class YBModConfiguredFeatures {
      */
 
     private static void addLargeBridge(String id, BridgePlacementConfig placementConfig) {
-        addBridge(id, placementConfig, YBConfig.spawnRates.largeBridges.get());
+        addBridge(id, placementConfig, YungsBridges.CONFIG.yungsBridges.spawnRates.largeBridges);
     }
 
     private static void addMediumBridge(String id, BridgePlacementConfig placementConfig) {
-        addBridge(id, placementConfig, YBConfig.spawnRates.mediumBridges.get());
+        addBridge(id, placementConfig, YungsBridges.CONFIG.yungsBridges.spawnRates.mediumBridges);
     }
 
     private static void addSmallBridge(String id, BridgePlacementConfig placementConfig) {
-        addBridge(id, placementConfig, YBConfig.spawnRates.smallBridges.get());
+        addBridge(id, placementConfig, YungsBridges.CONFIG.yungsBridges.spawnRates.smallBridges);
     }
 
     private static void addBridge(String id, BridgePlacementConfig placementConfig, int chance) {
         BridgeFeatureConfig featureConfig = new BridgeFeatureConfig(id);
 
-        ConfiguredFeature<?, ?> configuredFeature = YBModFeatures.BRIDGE.get().configured(featureConfig);
+        ConfiguredFeature<?, ?> configuredFeature = YBModFeatures.BRIDGE.configured(featureConfig);
         PlacedFeature placedFeature = configuredFeature.placed(
                 BridgePlacement.of(placementConfig),
                 RarityFilter.onAverageOnceEvery(chance),
                 RngInitializerPlacement.randomized()
         );
 
-        ConfiguredFeature<?, ?> rotatedConfiguredFeature = YBModFeatures.BRIDGE.get().configured(featureConfig.rotatedCopy());
+        ConfiguredFeature<?, ?> rotatedConfiguredFeature = YBModFeatures.BRIDGE.configured(featureConfig.rotatedCopy());
         PlacedFeature placedRotatedFeature = rotatedConfiguredFeature.placed(
                 BridgePlacement.of(placementConfig.rotatedCopy()),
                 RarityFilter.onAverageOnceEvery(chance),

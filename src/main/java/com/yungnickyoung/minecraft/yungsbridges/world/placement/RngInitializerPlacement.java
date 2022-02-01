@@ -8,7 +8,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -17,7 +16,6 @@ import java.util.stream.Stream;
  * to maximize variability in feature placement.
  */
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
 public class RngInitializerPlacement extends PlacementModifier {
     private static final RngInitializerPlacement INSTANCE = new RngInitializerPlacement();
     public static final Codec<RngInitializerPlacement> CODEC = Codec.unit(() -> INSTANCE);

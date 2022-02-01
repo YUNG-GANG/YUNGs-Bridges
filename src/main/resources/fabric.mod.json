@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "yungsbridges",
+  "version": "${version}",
+  "name": "YUNG's Bridges",
+  "description": "Adds naturally occurring bridges throughout the world!",
+  "authors": [
+    "YUNGNICKYOUNG"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/yungs-bridges-fabric",
+    "sources": "https://github.com/yungnickyoung/YUNGs-Bridges",
+    "issues": "https://github.com/yungnickyoung/YUNGs-Bridges/issues",
+    "discord": "discord.gg/rns3beq"
+  },
+  "license": "LGPLv3",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.yungnickyoung.minecraft.yungsbridges.YungsBridges"
+    ],
+    "modmenu": [
+      "com.yungnickyoung.minecraft.yungsbridges.config.gui.YBModMenu"
+    ]
+  },
+  "mixins": [
+    "yungsbridges.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.0",
+    "fabric": ">=0.43.1",
+    "minecraft": ">=1.18",
+    "cloth-config2": ">=6.0.42",
+    "java": ">=17",
+    "yungsapi": ">=1.18-Fabric-35"
+  }
+}

@@ -6,12 +6,10 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-@ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MultipleAttemptSingleRandomFeatureConfig implements FeatureConfiguration {
     public static final Codec<MultipleAttemptSingleRandomFeatureConfig> CODEC = PlacedFeature.LIST_CODEC

@@ -5,57 +5,49 @@ import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeatureConfig;
+import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Supplier;
 
 public class YBModFeatures {
-    /* Registry for deferred registration */
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, YungsBridges.MOD_ID);
-
-    /* Features */
-    public static final RegistryObject<Feature<BridgeFeatureConfig>> BRIDGE = register("bridge", BridgeFeature::new);
-    public static final RegistryObject<Feature<MultipleAttemptSingleRandomFeatureConfig>> MULTIPLE_ATTEMPT_SINGLE_RANDOM = register("multiple_attempt_single_random", MultipleAttemptSingleRandomFeature::new);
+    public static final Feature<BridgeFeatureConfig> BRIDGE = new BridgeFeature();
+    public static final Feature<MultipleAttemptSingleRandomFeatureConfig> MULTIPLE_ATTEMPT_SINGLE_RANDOM = new MultipleAttemptSingleRandomFeature();
 
     public static void init () {
-        FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(YBModFeatures::commonSetup);
-        MinecraftForge.EVENT_BUS.addListener(YBModFeatures::onBiomeLoad);
+        register("bridge", BRIDGE);
+        register("multiple_attempt_single_random", MULTIPLE_ATTEMPT_SINGLE_RANDOM);
+        YBModConfiguredFeatures.registerConfiguredFeatures();
+        YBModConfiguredFeatures.registerPlacedFeatures();
+        addFeaturesToBiomes();
     }
 
-    /**
-     * Set up features.
-     */
-    private static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            YBModConfiguredFeatures.registerConfiguredFeatures();
-            YBModConfiguredFeatures.registerPlacedFeatures();
-        });
+    private static void register(String name, Feature<?> feature) {
+        Registry.register(Registry.FEATURE, new ResourceLocation(YungsBridges.MOD_ID, name), feature);
     }
 
     /**
      * Adds configured features to appropriate biomes.
      */
-    private static void onBiomeLoad(BiomeLoadingEvent event) {
-        // Ignore blacklisted biomes
-        if (YungsBridges.blacklistedBiomes.contains(event.getName().toString())) return;
-
-        // Add bridges to non-blacklisted river biomes
-        if (event.getCategory() == Biome.BiomeCategory.RIVER) {
-            event.getGeneration().getFeatures(GenerationStep.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_LIST_FEATURE_PLACED);
-        }
+    private static void addFeaturesToBiomes() {
+        BiomeModifications.create(new ResourceLocation(YungsBridges.MOD_ID, "bridge_addition"))
+                .add(ModificationPhase.ADDITIONS,
+                        YBModFeatures::selectBiomes,
+                        YBModFeatures::modifyBiomes);
     }
 
-    private static <T extends Feature<?>> RegistryObject<T> register(String name, Supplier<T> feature) {
-        return FEATURES.register(name, feature);
+    private static boolean selectBiomes(BiomeSelectionContext context) {
+        String biomeName = context.getBiomeKey().location().toString();
+        if (YungsBridges.blacklistedBiomes.contains(biomeName)) return false;
+        return context.getBiome().getBiomeCategory() == Biome.BiomeCategory.RIVER;
+    }
+
+    private static void modifyBiomes(BiomeModificationContext context) {
+        context.getGenerationSettings().addBuiltInFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, YBModConfiguredFeatures.BRIDGE_LIST_FEATURE_PLACED);
     }
 }

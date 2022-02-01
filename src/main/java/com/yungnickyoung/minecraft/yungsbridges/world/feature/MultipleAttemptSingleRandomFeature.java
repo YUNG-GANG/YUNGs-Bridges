@@ -5,7 +5,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -14,7 +13,6 @@ import java.util.function.Supplier;
  * Randomly iterates a list of features, attempting to generate each one.
  * Stops upon successful generation of a feature.
  */
-@ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MultipleAttemptSingleRandomFeature extends Feature<MultipleAttemptSingleRandomFeatureConfig> {
     public MultipleAttemptSingleRandomFeature() {
