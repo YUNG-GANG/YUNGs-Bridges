@@ -1,14 +1,14 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Randomly iterates a list of features, attempting to generate each one.
@@ -23,19 +23,19 @@ public class MultipleAttemptSingleRandomFeature extends Feature<MultipleAttemptS
 
     @Override
     public boolean place(FeaturePlaceContext<MultipleAttemptSingleRandomFeatureConfig> context) {
-        List<Supplier<PlacedFeature>> list = new ArrayList<>(context.config().features);
-        int size = list.size();
+        List<PlacedFeature> placedFeatureList = context.config().features.stream().map(Holder::value).collect(Collectors.toList());
+        int size = placedFeatureList.size();
 
         while (size > 0) {
-            // Get random feature from list
-            int i = context.random().nextInt(list.size());
-            PlacedFeature placedFeature = list.get(i).get();
+            // Get random feature from placedFeatureList
+            int i = context.random().nextInt(placedFeatureList.size());
+            PlacedFeature placedFeature = placedFeatureList.get(i);
 
             // If it successfully generates, return true
             if (placedFeature.place(context.level(), context.chunkGenerator(), context.random(), context.origin())) return true;
 
-            // Else, remove it from the list and continue
-            list.remove(i);
+            // Else, remove it from the placedFeatureList and continue
+            placedFeatureList.remove(i);
             size--;
         }
 

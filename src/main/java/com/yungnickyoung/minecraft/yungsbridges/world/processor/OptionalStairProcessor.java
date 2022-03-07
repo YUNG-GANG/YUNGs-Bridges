@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -23,7 +24,7 @@ public class OptionalStairProcessor implements ITemplateFeatureProcessor {
 
     @Override
     public void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
-        Biome biome = level.getBiome(cornerPos);
+        Holder<Biome> biome = level.getBiome(cornerPos);
 
         // Randomly replace purpur stairs with stone brick stairs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PURPUR_STAIRS)) {

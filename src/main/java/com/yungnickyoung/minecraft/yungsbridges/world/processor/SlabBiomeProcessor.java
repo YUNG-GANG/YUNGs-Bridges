@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -16,7 +17,7 @@ import java.util.Random;
 public class SlabBiomeProcessor implements ITemplateFeatureProcessor {
     @Override
     public void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
-        Biome biome = level.getBiome(cornerPos);
+        Holder<Biome> biome = level.getBiome(cornerPos);
 
         // Replace wooden slabs for biome variants
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_SLAB)) {

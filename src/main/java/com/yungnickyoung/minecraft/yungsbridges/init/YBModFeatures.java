@@ -5,6 +5,7 @@ import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeature;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSingleRandomFeatureConfig;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -51,7 +52,7 @@ public class YBModFeatures {
 
         // Add bridges to non-blacklisted river biomes
         if (event.getCategory() == Biome.BiomeCategory.RIVER) {
-            event.getGeneration().getFeatures(GenerationStep.Decoration.SURFACE_STRUCTURES).add(() -> YBModConfiguredFeatures.BRIDGE_LIST_FEATURE_PLACED);
+            event.getGeneration().getFeatures(GenerationStep.Decoration.SURFACE_STRUCTURES).add(Holder.direct(YBModConfiguredFeatures.BRIDGE_LIST_FEATURE_PLACED));
         }
     }
 

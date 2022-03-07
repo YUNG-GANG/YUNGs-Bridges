@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
@@ -164,8 +165,8 @@ public interface ITemplateFeatureProcessor {
     /**
      * Returns the default state of the proper fence BlockState for the given biome.
      */
-    default BlockState getFenceBiomeVariant(Biome biome) {
-        switch (biome.getBiomeCategory()) {
+    default BlockState getFenceBiomeVariant(Holder<Biome> biome) {
+        switch (Biome.getBiomeCategory(biome)) {
             case MESA: return Blocks.DARK_OAK_FENCE.defaultBlockState();
             case TAIGA: return Blocks.SPRUCE_FENCE.defaultBlockState();
             case JUNGLE: return Blocks.JUNGLE_FENCE.defaultBlockState();
@@ -177,8 +178,8 @@ public interface ITemplateFeatureProcessor {
     /**
      * Returns the default state of the proper log BlockState for the given biome.
      */
-    default BlockState getLogBiomeVariant(Biome biome) {
-        switch (biome.getBiomeCategory()) {
+    default BlockState getLogBiomeVariant(Holder<Biome> biome) {
+        switch (Biome.getBiomeCategory(biome)) {
             case MESA: return Blocks.DARK_OAK_LOG.defaultBlockState();
             case TAIGA: return Blocks.SPRUCE_LOG.defaultBlockState();
             case JUNGLE: return Blocks.JUNGLE_LOG.defaultBlockState();
@@ -190,8 +191,8 @@ public interface ITemplateFeatureProcessor {
     /**
      * Returns the default state of the proper planks BlockState for the given biome.
      */
-    default BlockState getPlanksBiomeVariant(Biome biome) {
-        switch (biome.getBiomeCategory()) {
+    default BlockState getPlanksBiomeVariant(Holder<Biome> biome) {
+        switch (Biome.getBiomeCategory(biome)) {
             case MESA: return Blocks.DARK_OAK_PLANKS.defaultBlockState();
             case TAIGA: return Blocks.SPRUCE_PLANKS.defaultBlockState();
             case JUNGLE: return Blocks.JUNGLE_PLANKS.defaultBlockState();
@@ -203,8 +204,8 @@ public interface ITemplateFeatureProcessor {
     /**
      * Returns the default state of the proper slab BlockState for the given biome.
      */
-    default BlockState getSlabBiomeVariant(Biome biome) {
-        switch (biome.getBiomeCategory()) {
+    default BlockState getSlabBiomeVariant(Holder<Biome> biome) {
+        switch (Biome.getBiomeCategory(biome)) {
             case MESA: return Blocks.DARK_OAK_SLAB.defaultBlockState();
             case TAIGA: return Blocks.SPRUCE_SLAB.defaultBlockState();
             case JUNGLE: return Blocks.JUNGLE_SLAB.defaultBlockState();
@@ -216,8 +217,8 @@ public interface ITemplateFeatureProcessor {
     /**
      * Returns the default state of the proper stairs BlockState for the given biome.
      */
-    default BlockState getStairsBiomeVariant(Biome biome) {
-        switch (biome.getBiomeCategory()) {
+    default BlockState getStairsBiomeVariant(Holder<Biome> biome) {
+        switch (Biome.getBiomeCategory(biome)) {
             case MESA: return Blocks.DARK_OAK_STAIRS.defaultBlockState();
             case TAIGA: return Blocks.SPRUCE_STAIRS.defaultBlockState();
             case JUNGLE: return Blocks.JUNGLE_STAIRS.defaultBlockState();

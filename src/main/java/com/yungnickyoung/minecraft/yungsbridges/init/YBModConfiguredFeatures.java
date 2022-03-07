@@ -7,6 +7,7 @@ import com.yungnickyoung.minecraft.yungsbridges.world.feature.MultipleAttemptSin
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacement;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.BridgePlacementConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.placement.RngInitializerPlacement;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -17,10 +18,9 @@ import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class YBModConfiguredFeatures {
-    private static final List<Supplier<PlacedFeature>> PLACED_BRIDGES = new ArrayList<>();
+    private static final List<PlacedFeature> PLACED_BRIDGES = new ArrayList<>();
 
     static {
         addLargeBridge("bridge/stone/31_0", new BridgePlacementConfig(31, 5, 4, 28).widthOffset(2).solidBlocks(3));
@@ -36,13 +36,13 @@ public class YBModConfiguredFeatures {
         addSmallBridge("bridge/stone/15_1", new BridgePlacementConfig(15, 5, 2, 14).widthOffset(1).solidBlocks(2));
     }
 
-    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE_CONFIGURED = YBModFeatures.MULTIPLE_ATTEMPT_SINGLE_RANDOM.get()
-            .configured(new MultipleAttemptSingleRandomFeatureConfig(PLACED_BRIDGES));
+    public static final ConfiguredFeature<?, ?> BRIDGE_LIST_FEATURE_CONFIGURED =
+            new ConfiguredFeature<>(YBModFeatures.MULTIPLE_ATTEMPT_SINGLE_RANDOM.get(), new MultipleAttemptSingleRandomFeatureConfig(PLACED_BRIDGES));
 
-    public static final PlacedFeature BRIDGE_LIST_FEATURE_PLACED = BRIDGE_LIST_FEATURE_CONFIGURED
-            .placed(BiomeFilter.biome());
+    public static final PlacedFeature BRIDGE_LIST_FEATURE_PLACED =
+            new PlacedFeature(Holder.direct(BRIDGE_LIST_FEATURE_CONFIGURED), List.of(BiomeFilter.biome()));
 
-    /**
+    /*
      * Registration methods.
      */
 
@@ -81,21 +81,21 @@ public class YBModConfiguredFeatures {
     private static void addBridge(String id, BridgePlacementConfig placementConfig, int chance) {
         BridgeFeatureConfig featureConfig = new BridgeFeatureConfig(id);
 
-        ConfiguredFeature<?, ?> configuredFeature = YBModFeatures.BRIDGE.get().configured(featureConfig);
-        PlacedFeature placedFeature = configuredFeature.placed(
+        ConfiguredFeature<?, ?> configuredFeature = new ConfiguredFeature<>(YBModFeatures.BRIDGE.get(), featureConfig);
+        PlacedFeature placedFeature = new PlacedFeature(Holder.direct(configuredFeature), List.of(
                 BridgePlacement.of(placementConfig),
                 RarityFilter.onAverageOnceEvery(chance),
                 RngInitializerPlacement.randomized()
-        );
+        ));
 
-        ConfiguredFeature<?, ?> rotatedConfiguredFeature = YBModFeatures.BRIDGE.get().configured(featureConfig.rotatedCopy());
-        PlacedFeature placedRotatedFeature = rotatedConfiguredFeature.placed(
+        ConfiguredFeature<?, ?> rotatedConfiguredFeature = new ConfiguredFeature<>(YBModFeatures.BRIDGE.get(), featureConfig.rotatedCopy());
+        PlacedFeature placedRotatedFeature = new PlacedFeature(Holder.direct(rotatedConfiguredFeature), List.of(
                 BridgePlacement.of(placementConfig.rotatedCopy()),
                 RarityFilter.onAverageOnceEvery(chance),
                 RngInitializerPlacement.randomized()
-        );
+        ));
 
-        PLACED_BRIDGES.add(() -> placedFeature);
-        PLACED_BRIDGES.add(() -> placedRotatedFeature);
+        PLACED_BRIDGES.add(placedFeature);
+        PLACED_BRIDGES.add(placedRotatedFeature);
     }
 }

@@ -16,10 +16,10 @@ public class YBModPlacements {
     public static PlacementModifierType<?> BRIDGE_PLACEMENT;
 
     public static void init() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(YBModPlacements::registerPlacements);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(YBModPlacements::commonSetup);
     }
 
-    private static void registerPlacements(final FMLCommonSetupEvent event) {
+    private static void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             RNG_INITIALIZER_PLACEMENT = register("rng_initializer", RngInitializerPlacement.CODEC);
             BRIDGE_PLACEMENT = register("bridge", BridgePlacement.CODEC);

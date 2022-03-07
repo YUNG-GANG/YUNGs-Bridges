@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
 import com.google.common.collect.Lists;
-import com.yungnickyoung.minecraft.yungsbridges.YungsBridges;
 import com.yungnickyoung.minecraft.yungsbridges.init.YBModProcessors;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.core.BlockPos;
