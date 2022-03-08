@@ -13,6 +13,6 @@
   "text.autoconfig.yungsbridges-fabric-1_18.option.yungsBridges.spawnRates.@Tooltip[2]": "E.g. if N = 3 for small bridges, then an ATTEMPT will be made to spawn a small bridge every 3 chunks.",
   "text.autoconfig.yungsbridges-fabric-1_18.option.yungsBridges.spawnRates.@Tooltip[3]": "Note this is ONLY an attempt - the bridge will only spawn if the chunk contains fitting river terrain.",
   "text.autoconfig.yungsbridges-fabric-1_18.option.yungsBridges.spawnRates.smallBridges": "Small Bridge Spawn Rate",
-  "text.autoconfig.yungsbridges-fabric-1_18.option.yungsBridges.spawnRates.mediumBridges": "Meidum Bridge Spawn Rate",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.yungsBridges.spawnRates.mediumBridges": "Medium Bridge Spawn Rate",
   "text.autoconfig.yungsbridges-fabric-1_18.option.yungsBridges.spawnRates.largeBridges": "Large Bridge Spawn Rate"
 }
