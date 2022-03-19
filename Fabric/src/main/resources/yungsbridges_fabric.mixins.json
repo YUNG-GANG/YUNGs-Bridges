@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.yungnickyoung.minecraft.yungsbridges.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "yungsbridges.refmap.json",
+  "mixins": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

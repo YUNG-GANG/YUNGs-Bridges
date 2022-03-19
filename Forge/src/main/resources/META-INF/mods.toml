@@ -1,0 +1,33 @@
+modLoader="javafml" #mandatory
+loaderVersion="[40,)"
+license="LGPLv3"
+issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Bridges/issues"
+
+[[mods]]
+    modId="yungsbridges"
+    version="${file.jarVersion}"
+	displayName="YUNG's Bridges"
+    credits="Thanks so much to all my patrons for their support!"
+    authors="YUNGNICKYOUNG"
+    description="Adds naturally occurring bridges throughout the world!"
+    logoFile="logo.png"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-bridges"
+
+[[dependencies.yungsbridges]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+
+[[dependencies.yungsbridges]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40.0.8,)"
+    ordering="NONE"
+    side="SERVER"
+
+[[dependencies.yungsbridges]]
+    modId="yungsapi"
+    versionRange="[1.18.2-Forge-2.0.7,)"
+    mandatory=true
+    ordering="NONE"
+    side="BOTH"
