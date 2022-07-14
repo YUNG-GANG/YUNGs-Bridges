@@ -5,6 +5,7 @@ import com.yungnickyoung.minecraft.yungsbridges.YungsBridgesCommon;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * Convenience class for easily generating features from structure NBT.
@@ -33,19 +33,19 @@ public abstract class AbstractTemplateFeature<C extends FeatureConfiguration> ex
      * Generates the template feature with default placement settings and applies processors.
      * @param id ID of this template feature (i.e. namespaced path to the structure NBT)
      * @param level WorldGenLevel
-     * @param rand Random
+     * @param randomSource RandomSource
      * @param pos The position to generate the feature at. This will be the corner of the feature.
      * @return The generated Template
      */
-    protected StructureTemplate createTemplate(ResourceLocation id, WorldGenLevel level, Random rand, BlockPos pos) {
-        return createTemplateWithPlacement(id, level, rand, pos, new StructurePlaceSettings());
+    protected StructureTemplate createTemplate(ResourceLocation id, WorldGenLevel level, RandomSource randomSource, BlockPos pos) {
+        return createTemplateWithPlacement(id, level, randomSource, pos, new StructurePlaceSettings());
     }
 
     /**
      * Generates the template feature and applies processors.
      * @param id ID of this template feature (i.e. namespaced path to the structure NBT)
      * @param level WorldGenLevel
-     * @param rand Random
+     * @param randomSource RandomSource
      * @param cornerPos The position to generate the feature at. This will be the corner of the feature.
      * @param placement Placement settings for the feature
      * @return The generated Template
@@ -53,7 +53,7 @@ public abstract class AbstractTemplateFeature<C extends FeatureConfiguration> ex
     protected StructureTemplate createTemplateWithPlacement(
         ResourceLocation id,
         WorldGenLevel level,
-        Random rand,
+        RandomSource randomSource,
         BlockPos cornerPos,
         StructurePlaceSettings placement
     ) {
@@ -66,13 +66,12 @@ public abstract class AbstractTemplateFeature<C extends FeatureConfiguration> ex
 
         StructureTemplate template = templateOptional.get();
 
-
         // Create & place template
         BlockPos centerPos = cornerPos.offset(template.getSize().getX() / 2, 0, template.getSize().getZ() / 2);
-        template.placeInWorld(level, cornerPos, centerPos, placement, rand, 2);
+        template.placeInWorld(level, cornerPos, centerPos, placement, randomSource, 2);
 
         // Additional optional processing
-        processors.forEach(processor -> processor.processTemplate(template, level, rand, cornerPos, centerPos, placement));
+        processors.forEach(processor -> processor.processTemplate(template, level, randomSource, cornerPos, centerPos, placement));
 
         return template;
     }

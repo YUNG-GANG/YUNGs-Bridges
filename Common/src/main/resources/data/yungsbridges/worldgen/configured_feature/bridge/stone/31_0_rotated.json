@@ -1,0 +1,7 @@
+{
+  "type": "yungsbridges:bridge",
+  "config": {
+    "location": "yungsbridges:bridge/stone/31_0",
+    "is_z_axis": false
+  }
+}

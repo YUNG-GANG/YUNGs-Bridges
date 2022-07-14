@@ -19,9 +19,6 @@
   "entrypoints": {
     "main": [
       "com.yungnickyoung.minecraft.yungsbridges.YungsBridgesFabric"
-    ],
-    "modmenu": [
-      "com.yungnickyoung.minecraft.yungsbridges.config.gui.YBModMenu"
     ]
   },
   "mixins": [
@@ -29,11 +26,11 @@
     "yungsbridges_fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.13.3",
-    "fabric": ">=0.47.8",
-    "minecraft": ">=1.18.2",
-    "cloth-config2": ">=6.2.57",
+    "fabricloader": ">=0.14.8",
+    "fabric": ">=0.57.0",
+    "minecraft": ">=1.19",
+    "cloth-config2": ">=7.0.72",
     "java": ">=17",
-    "yungsapi": ">=1.18.2-Fabric-2.0.7"
+    "yungsapi": ">=1.19-Fabric-3.4.1"
   }
 }

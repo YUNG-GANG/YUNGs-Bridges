@@ -1,0 +1,8 @@
+{
+  "feature": "yungsbridges:bridge_list",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

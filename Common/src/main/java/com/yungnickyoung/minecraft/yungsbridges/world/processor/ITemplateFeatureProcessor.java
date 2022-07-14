@@ -1,8 +1,13 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
+import com.yungnickyoung.minecraft.yungsbridges.YungsBridgesCommon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
@@ -15,7 +20,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.material.Material;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 /**
@@ -25,17 +29,20 @@ import java.util.function.Supplier;
  */
 public interface ITemplateFeatureProcessor {
     BlockState AIR = Blocks.AIR.defaultBlockState();
-    BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
+    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/badlands"));
+    TagKey<Biome> TAIGA_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/taiga"));
+    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/savanna"));
+    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/jungle"));
 
     /**
      * Processes the given template when placing a feature.
      * @param template The feature template to process
      * @param level World instance
-     * @param rand Random instance
+     * @param randomSource RandomSource instance
      * @param cornerPos Position of the lowest x-z corner of the feature
      * @param placementSettings The feature's PlacementSettings
      */
-    void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings);
+    void processTemplate(StructureTemplate template, WorldGenLevel level, RandomSource randomSource, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings);
 
     /**
      * Generates a pillar vertically down from the given starting position.
@@ -166,64 +173,54 @@ public interface ITemplateFeatureProcessor {
      * Returns the default state of the proper fence BlockState for the given biome.
      */
     default BlockState getFenceBiomeVariant(Holder<Biome> biome) {
-        switch (Biome.getBiomeCategory(biome)) {
-            case MESA: return Blocks.DARK_OAK_FENCE.defaultBlockState();
-            case TAIGA: return Blocks.SPRUCE_FENCE.defaultBlockState();
-            case JUNGLE: return Blocks.JUNGLE_FENCE.defaultBlockState();
-            case SAVANNA: return Blocks.ACACIA_FENCE.defaultBlockState();
-            default: return Blocks.OAK_FENCE.defaultBlockState();
-        }
+        if (biome.is(BADLANDS_TAG)) return Blocks.DARK_OAK_FENCE.defaultBlockState();
+        if (biome.is(TAIGA_TAG)) return Blocks.SPRUCE_FENCE.defaultBlockState();
+        if (biome.is(JUNGLE_TAG)) return Blocks.JUNGLE_FENCE.defaultBlockState();
+        if (biome.is(SAVANNA_TAG)) return Blocks.ACACIA_FENCE.defaultBlockState();
+        return Blocks.OAK_FENCE.defaultBlockState();
     }
 
     /**
      * Returns the default state of the proper log BlockState for the given biome.
      */
     default BlockState getLogBiomeVariant(Holder<Biome> biome) {
-        switch (Biome.getBiomeCategory(biome)) {
-            case MESA: return Blocks.DARK_OAK_LOG.defaultBlockState();
-            case TAIGA: return Blocks.SPRUCE_LOG.defaultBlockState();
-            case JUNGLE: return Blocks.JUNGLE_LOG.defaultBlockState();
-            case SAVANNA: return Blocks.ACACIA_LOG.defaultBlockState();
-            default: return Blocks.OAK_LOG.defaultBlockState();
-        }
+        if (biome.is(BADLANDS_TAG)) return Blocks.DARK_OAK_LOG.defaultBlockState();
+        if (biome.is(TAIGA_TAG)) return Blocks.SPRUCE_LOG.defaultBlockState();
+        if (biome.is(JUNGLE_TAG)) return Blocks.JUNGLE_LOG.defaultBlockState();
+        if (biome.is(SAVANNA_TAG)) return Blocks.ACACIA_LOG.defaultBlockState();
+        return Blocks.OAK_LOG.defaultBlockState();
     }
 
     /**
      * Returns the default state of the proper planks BlockState for the given biome.
      */
     default BlockState getPlanksBiomeVariant(Holder<Biome> biome) {
-        switch (Biome.getBiomeCategory(biome)) {
-            case MESA: return Blocks.DARK_OAK_PLANKS.defaultBlockState();
-            case TAIGA: return Blocks.SPRUCE_PLANKS.defaultBlockState();
-            case JUNGLE: return Blocks.JUNGLE_PLANKS.defaultBlockState();
-            case SAVANNA: return Blocks.ACACIA_PLANKS.defaultBlockState();
-            default: return Blocks.OAK_PLANKS.defaultBlockState();
-        }
+        if (biome.is(BADLANDS_TAG)) return Blocks.DARK_OAK_PLANKS.defaultBlockState();
+        if (biome.is(TAIGA_TAG)) return Blocks.SPRUCE_PLANKS.defaultBlockState();
+        if (biome.is(JUNGLE_TAG)) return Blocks.JUNGLE_PLANKS.defaultBlockState();
+        if (biome.is(SAVANNA_TAG)) return Blocks.ACACIA_PLANKS.defaultBlockState();
+        return Blocks.OAK_PLANKS.defaultBlockState();
     }
 
     /**
      * Returns the default state of the proper slab BlockState for the given biome.
      */
     default BlockState getSlabBiomeVariant(Holder<Biome> biome) {
-        switch (Biome.getBiomeCategory(biome)) {
-            case MESA: return Blocks.DARK_OAK_SLAB.defaultBlockState();
-            case TAIGA: return Blocks.SPRUCE_SLAB.defaultBlockState();
-            case JUNGLE: return Blocks.JUNGLE_SLAB.defaultBlockState();
-            case SAVANNA: return Blocks.ACACIA_SLAB.defaultBlockState();
-            default: return Blocks.OAK_SLAB.defaultBlockState();
-        }
+        if (biome.is(BADLANDS_TAG)) return Blocks.DARK_OAK_SLAB.defaultBlockState();
+        if (biome.is(TAIGA_TAG)) return Blocks.SPRUCE_SLAB.defaultBlockState();
+        if (biome.is(JUNGLE_TAG)) return Blocks.JUNGLE_SLAB.defaultBlockState();
+        if (biome.is(SAVANNA_TAG)) return Blocks.ACACIA_SLAB.defaultBlockState();
+        return Blocks.OAK_SLAB.defaultBlockState();
     }
 
     /**
      * Returns the default state of the proper stairs BlockState for the given biome.
      */
     default BlockState getStairsBiomeVariant(Holder<Biome> biome) {
-        switch (Biome.getBiomeCategory(biome)) {
-            case MESA: return Blocks.DARK_OAK_STAIRS.defaultBlockState();
-            case TAIGA: return Blocks.SPRUCE_STAIRS.defaultBlockState();
-            case JUNGLE: return Blocks.JUNGLE_STAIRS.defaultBlockState();
-            case SAVANNA: return Blocks.ACACIA_STAIRS.defaultBlockState();
-            default: return Blocks.OAK_STAIRS.defaultBlockState();
-        }
+        if (biome.is(BADLANDS_TAG)) return Blocks.DARK_OAK_STAIRS.defaultBlockState();
+        if (biome.is(TAIGA_TAG)) return Blocks.SPRUCE_STAIRS.defaultBlockState();
+        if (biome.is(JUNGLE_TAG)) return Blocks.JUNGLE_STAIRS.defaultBlockState();
+        if (biome.is(SAVANNA_TAG)) return Blocks.ACACIA_STAIRS.defaultBlockState();
+        return Blocks.OAK_STAIRS.defaultBlockState();
     }
 }

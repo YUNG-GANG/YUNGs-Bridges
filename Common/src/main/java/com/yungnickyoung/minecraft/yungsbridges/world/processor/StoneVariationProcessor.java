@@ -2,12 +2,11 @@ package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 /**
  * Processor responsible for randomizing stone-based blocks.
@@ -31,30 +30,30 @@ public class StoneVariationProcessor implements ITemplateFeatureProcessor {
         .addBlock(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), .6f);
 
     @Override
-    public void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
+    public void processTemplate(StructureTemplate template, WorldGenLevel level, RandomSource randomSource, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
         // Stone brick variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICKS)) {
-            level.setBlock(blockInfo.pos, stoneBrickSelector.get(rand), 2);
+            level.setBlock(blockInfo.pos, stoneBrickSelector.get(randomSource), 2);
         }
 
         // Stone brick slab variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICK_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(stoneBrickSlabSelector.get(rand), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos, getSlabBlockWithState(stoneBrickSlabSelector.get(randomSource), blockInfo.state), 2);
         }
 
         // Stone brick wall variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICK_WALL)) {
-            level.setBlock(blockInfo.pos, getWallBlockWithState(stoneBrickWallSelector.get(rand), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos, getWallBlockWithState(stoneBrickWallSelector.get(randomSource), blockInfo.state), 2);
         }
 
         // Stone brick stair variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICK_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(stoneBrickStairSelector.get(rand), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos, getStairsBlockWithState(stoneBrickStairSelector.get(randomSource), blockInfo.state), 2);
         }
 
         // Cobblestone variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.COBBLESTONE)) {
-            level.setBlock(blockInfo.pos, cobblestoneSelector.get(rand), 2);
+            level.setBlock(blockInfo.pos, cobblestoneSelector.get(randomSource), 2);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
+import com.yungnickyoung.minecraft.yungsbridges.world.feature.config.MultipleAttemptSingleRandomFeatureConfig;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -23,7 +24,7 @@ public class MultipleAttemptSingleRandomFeature extends Feature<MultipleAttemptS
 
     @Override
     public boolean place(FeaturePlaceContext<MultipleAttemptSingleRandomFeatureConfig> context) {
-        List<PlacedFeature> placedFeatureList = context.config().features.stream().map(Holder::value).collect(Collectors.toList());
+        List<PlacedFeature> placedFeatureList = context.config().getPlacedFeatures().stream().map(Holder::value).collect(Collectors.toList());
         int size = placedFeatureList.size();
 
         while (size > 0) {

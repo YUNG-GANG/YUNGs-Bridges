@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_river",
+    {
+      "id": "#c:river",
+      "required": false
+    }
+  ]
+}

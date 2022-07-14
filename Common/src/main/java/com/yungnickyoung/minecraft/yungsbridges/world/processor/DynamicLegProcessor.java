@@ -3,13 +3,12 @@ package com.yungnickyoung.minecraft.yungsbridges.world.processor;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 /**
  * Processor responsible for all dynamic leg generation below bridges.
@@ -23,7 +22,7 @@ public class DynamicLegProcessor implements ITemplateFeatureProcessor {
         .addBlock(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), .6f);
 
     @Override
-    public void processTemplate(StructureTemplate template, WorldGenLevel level, Random rand, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
+    public void processTemplate(StructureTemplate template, WorldGenLevel level, RandomSource randomSource, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
         Holder<Biome> biome = level.getBiome(cornerPos);
 
         // Yellow stained glass for log legs
@@ -40,7 +39,7 @@ public class DynamicLegProcessor implements ITemplateFeatureProcessor {
 
         // Pink stained glass for stone bricks legs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PINK_STAINED_GLASS))
-            generatePillarDown(level, blockInfo.pos, () -> stoneBrickSelector.get(rand), () -> stoneBrickSelector.get(rand));
+            generatePillarDown(level, blockInfo.pos, () -> stoneBrickSelector.get(randomSource), () -> stoneBrickSelector.get(randomSource));
 
         // Blue stained glass for polished andesite legs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.LIGHT_BLUE_STAINED_GLASS))
@@ -48,11 +47,11 @@ public class DynamicLegProcessor implements ITemplateFeatureProcessor {
 
         // Magenta stained glass for cobblestone legs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.MAGENTA_STAINED_GLASS))
-            generatePillarDown(level, blockInfo.pos, () -> cobblestoneSelector.get(rand), () -> cobblestoneSelector.get(rand));
+            generatePillarDown(level, blockInfo.pos, () -> cobblestoneSelector.get(randomSource), () -> cobblestoneSelector.get(randomSource));
 
         // Gray stained glass for polished andesite replacement w/ stone bricks legs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.GRAY_STAINED_GLASS))
-            generatePillarDown(level, blockInfo.pos, Blocks.POLISHED_ANDESITE::defaultBlockState, () -> stoneBrickSelector.get(rand));
+            generatePillarDown(level, blockInfo.pos, Blocks.POLISHED_ANDESITE::defaultBlockState, () -> stoneBrickSelector.get(randomSource));
 
         // Prismarine walls for cobblestone wall legs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PRISMARINE_WALL))

@@ -3,16 +3,16 @@ package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.yungnickyoung.minecraft.yungsbridges.module.PlacementModule;
+import com.yungnickyoung.minecraft.yungsbridges.module.PlacementModifierTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.material.Material;
 
-import java.util.Random;
 import java.util.stream.Stream;
 
 /**
@@ -26,11 +26,11 @@ public class BridgePlacement extends PlacementModifier {
         codec.group(
             Codec.INT.fieldOf("length").forGetter((bridgePlacement) -> bridgePlacement.length),
             Codec.INT.fieldOf("width").forGetter((bridgePlacement) -> bridgePlacement.width),
-            Codec.INT.fieldOf("minWaterZ").forGetter((bridgePlacement) -> bridgePlacement.minWaterZ),
-            Codec.INT.fieldOf("maxWaterZ").forGetter((bridgePlacement) -> bridgePlacement.maxWaterZ),
-            Codec.INT.fieldOf("widthOffset").forGetter((bridgePlacement) -> bridgePlacement.widthOffset),
-            Codec.INT.fieldOf("numSolidBlocksNeeded").forGetter((bridgePlacement) -> bridgePlacement.numSolidBlocksNeeded),
-            Codec.BOOL.fieldOf("northSouth").forGetter((bridgePlacement) -> bridgePlacement.northSouth)
+            Codec.INT.fieldOf("min_water_z").forGetter((bridgePlacement) -> bridgePlacement.minWaterZ),
+            Codec.INT.fieldOf("max_water_z").forGetter((bridgePlacement) -> bridgePlacement.maxWaterZ),
+            Codec.INT.fieldOf("width_offset").forGetter((bridgePlacement) -> bridgePlacement.widthOffset),
+            Codec.INT.fieldOf("num_solid_blocks_needed").forGetter((bridgePlacement) -> bridgePlacement.numSolidBlocksNeeded),
+            Codec.BOOL.optionalFieldOf("is_z_axis", true).forGetter((bridgePlacement) -> bridgePlacement.isZAxis)
         ).apply(codec, BridgePlacement::new));
 
     /** Length of the bridge. This is usually the exact length of the bridge NBT structure itself. */
@@ -56,43 +56,42 @@ public class BridgePlacement extends PlacementModifier {
     public int numSolidBlocksNeeded;
 
     /** Rotation of the bridge. True if bridge should go north-south, false if east-west. */
-    public boolean northSouth;
+    public boolean isZAxis;
 
-    private BridgePlacement(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset, int numSolidBlocksNeeded, boolean northSouth) {
+    private BridgePlacement(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset, int numSolidBlocksNeeded, boolean isZAxis) {
         this.length = length;
         this.width = width;
         this.minWaterZ = minWaterZ;
         this.maxWaterZ = maxWaterZ;
         this.widthOffset = widthOffset;
         this.numSolidBlocksNeeded = numSolidBlocksNeeded;
-        this.northSouth = northSouth;
-    }
-
-    public static BridgePlacement of(int length, int width, int minWaterZ, int maxWaterZ, int widthOffset, int numSolidBlocksNeeded, boolean northSouth) {
-        return new BridgePlacement(length, width, minWaterZ, maxWaterZ, widthOffset, numSolidBlocksNeeded, northSouth);
-    }
-
-    public static BridgePlacement of(BridgePlacementConfig config) {
-        return BridgePlacement.of(config.length, config.width, config.minWaterZ, config.maxWaterZ, config.widthOffset, config.numSolidBlocksNeeded, config.northSouth);
+        this.isZAxis = isZAxis;
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext placementContext, Random random, BlockPos blockPos) {
+    public Stream<BlockPos> getPositions(PlacementContext placementContext, RandomSource randomSource, BlockPos blockPos) {
         // Mutable that is always at sea level
         BlockPos.MutableBlockPos seaLevelMutable = blockPos.mutable();
         int seaLevel = placementContext.getLevel().getSeaLevel() - 1;
         seaLevelMutable.setY(seaLevel);
 
+        // DEBUG
+//        Set<BlockPos> SOLID_BLOCKS = new HashSet<>();
+//        Set<BlockPos> WATER_BLOCKS = new HashSet<>();
+
         // Scan the grid, looking for suitable locations
         for (int candidateMiddleMinorAxisOffset = width / 2 + widthOffset + 1; candidateMiddleMinorAxisOffset < 16 - width / 2 - widthOffset; candidateMiddleMinorAxisOffset++) {
             for (int candidateStartMajorAxisOffset = 0; candidateStartMajorAxisOffset < 16; candidateStartMajorAxisOffset++) {
+//                SOLID_BLOCKS.clear();
+//                WATER_BLOCKS.clear();
+
                 // Candidate starting position for the bridge
-                BlockPos startingPos = northSouth
+                BlockPos startingPos = isZAxis
                     ? new BlockPos(blockPos.getX() + candidateMiddleMinorAxisOffset, seaLevel, blockPos.getZ() + candidateStartMajorAxisOffset)
                     : new BlockPos(blockPos.getX() + candidateStartMajorAxisOffset, seaLevel, blockPos.getZ() + candidateMiddleMinorAxisOffset);
 
                 // Corresponding ending position for the current candidate starting position.
-                BlockPos endingPos = northSouth
+                BlockPos endingPos = isZAxis
                     ? new BlockPos(blockPos.getX() + candidateMiddleMinorAxisOffset, seaLevel, blockPos.getZ() + candidateStartMajorAxisOffset + length + 1)
                     : new BlockPos(blockPos.getX() + candidateStartMajorAxisOffset + length + 1, seaLevel, blockPos.getZ() + candidateMiddleMinorAxisOffset);
 
@@ -115,13 +114,14 @@ public class BridgePlacement extends PlacementModifier {
                         int minorAxisSolidOffset = direction * minorAxisSolidDist;
 
                         // Update mutable position
-                        if (northSouth) {
+                        if (isZAxis) {
                             seaLevelMutable.set(startingPos.getX() + minorAxisSolidOffset, startingPos.getY(), startingPos.getZ());
                         } else {
                             seaLevelMutable.set(startingPos.getX(), startingPos.getY(), startingPos.getZ() + minorAxisSolidOffset);
                         }
 
                         if (placementContext.getBlockState(seaLevelMutable).canOcclude() && placementContext.getHeight(Heightmap.Types.WORLD_SURFACE, seaLevelMutable.getX(), seaLevelMutable.getZ()) <= seaLevel + 1) {
+//                            SOLID_BLOCKS.add(seaLevelMutable.immutable());
                             numSolidBlocks++;
                         } else {
                             break;
@@ -139,13 +139,14 @@ public class BridgePlacement extends PlacementModifier {
                         int minorAxisSolidOffset = direction * minorAxisSolidDist;
 
                         // Update mutable position
-                        if (northSouth) {
+                        if (isZAxis) {
                             seaLevelMutable.set(endingPos.getX() + minorAxisSolidOffset, endingPos.getY(), endingPos.getZ());
                         } else {
                             seaLevelMutable.set(endingPos.getX(), endingPos.getY(), endingPos.getZ() + minorAxisSolidOffset);
                         }
 
                         if (placementContext.getBlockState(seaLevelMutable).canOcclude() && placementContext.getHeight(Heightmap.Types.WORLD_SURFACE, seaLevelMutable.getX(), seaLevelMutable.getZ()) <= seaLevel + 1) {
+//                            SOLID_BLOCKS.add(seaLevelMutable.immutable());
                             numSolidBlocks++;
                         } else {
                             break;
@@ -160,11 +161,15 @@ public class BridgePlacement extends PlacementModifier {
                 for (int minorAxisWaterOffset = -width / 2; minorAxisWaterOffset <= width / 2; minorAxisWaterOffset++) {
                     for (int majorAxisWaterOffset = minWaterZ; majorAxisWaterOffset <= maxWaterZ; majorAxisWaterOffset++) {
                         // Update mutable position
-                        if (northSouth) {
+                        if (isZAxis) {
                             seaLevelMutable.set(startingPos.getX() + minorAxisWaterOffset, seaLevel, startingPos.getZ() + majorAxisWaterOffset);
                         } else {
                             seaLevelMutable.set(startingPos.getX() + majorAxisWaterOffset, seaLevel, startingPos.getZ() + minorAxisWaterOffset);
                         }
+
+//                        if (placementContext.getBlockState(seaLevelMutable).getMaterial() == Material.WATER) {
+//                            WATER_BLOCKS.add(seaLevelMutable.immutable());
+//                        }
 
                         if (placementContext.getBlockState(seaLevelMutable).getMaterial() != Material.WATER) {
                             isAllWater = false;
@@ -172,9 +177,20 @@ public class BridgePlacement extends PlacementModifier {
                         }
                     }
                 }
+
+                // Final check if bridge position is valid
                 if (isAllWater) {
-                    // Valid position for bridge!
-                    return northSouth
+                    // DEBUG stuff
+//                    SOLID_BLOCKS.forEach(pos -> placementContext.getLevel().setBlock(pos, Blocks.EMERALD_BLOCK.defaultBlockState(), 2));
+//                    WATER_BLOCKS.forEach(pos -> placementContext.getLevel().setBlock(pos, Blocks.LAPIS_BLOCK.defaultBlockState(), 2));
+//                    placementContext.getLevel().setBlock(startingPos.atY(seaLevel + 10), Blocks.COPPER_BLOCK.defaultBlockState(), 2);
+//                    placementContext.getLevel().setBlock(endingPos.atY(seaLevel + 10), Blocks.GLOWSTONE.defaultBlockState(), 2);
+//                    if (isZAxis)
+//                        placementContext.getLevel().setBlock(new BlockPos(startingPos.getX() - width / 2 - widthOffset, seaLevel + 10, startingPos.getZ() + 1), Blocks.DIAMOND_BLOCK.defaultBlockState(), 2);
+//                    else
+//                        placementContext.getLevel().setBlock(new BlockPos(startingPos.getX() + 1, seaLevel + 10, startingPos.getZ() + width / 2 + widthOffset), Blocks.GOLD_BLOCK.defaultBlockState(), 2);
+
+                    return isZAxis
                         ? Stream.of(new BlockPos(startingPos.getX() - width / 2 - widthOffset, seaLevel, startingPos.getZ() + 1))
                         : Stream.of(new BlockPos(startingPos.getX() + 1, seaLevel, startingPos.getZ() + width / 2 + widthOffset));
                 }
@@ -186,6 +202,6 @@ public class BridgePlacement extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return PlacementModule.BRIDGE_PLACEMENT;
+        return PlacementModifierTypeModule.BRIDGE_PLACEMENT;
     }
 }
