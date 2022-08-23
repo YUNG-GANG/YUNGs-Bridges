@@ -1,0 +1,20 @@
+{
+  "text.autoconfig.yungsbridges-fabric-1_18.title": "YUNG's Мости",
+  "text.autoconfig.yungsbridges-fabric-1_18.category.Spawn Rates": "Коефіцієнти появи",
+  "text.autoconfig.yungsbridges-fabric-1_18.category.default": "Головне",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.blacklistedBiomes": "Чорний список біомів",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.blacklistedBiomes.@Tooltip[0]": "Список біомів, які §6НЕ матимуть §fмостів.",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.blacklistedBiomes.@Tooltip[1]": "Для розміщення розглядаються лише річкові біоми, тому не вказуйте нерічкові біоми.",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.blacklistedBiomes.@Tooltip[2]": "Список має містити значення, розділені комами, у квадратних дужках.",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.blacklistedBiomes.@Tooltip[3]": "Записи повинні містити просторове ім'я моду",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.blacklistedBiomes.@Tooltip[4]": "Наприклад: \"[minecraft:river, minecraft:frozen_river]\"",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates": "Коефіцієнти появи",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.@Tooltip[0]": "Ви можете налаштувати коефіцієнти появи, якщо ви використовуєте модифікацію §6Terrain overhaul§f.",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.@Tooltip[1]": "Коефіцієнт появи кожного мосту становить 1/N на чанк, де N — це значення коефіцієнту появи.",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.@Tooltip[2]": "Наприклад якщо N=3 для малих мостів, тоді буде зроблена СПРОБА заспавнити",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.@Tooltip[3]": "маленький міст кожні 3 чанки. Зауважте, що це ТІЛЬКИ спроба – міст з’явиться,",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.@Tooltip[4]": "лише якщо чанк містить відповідну річкову місцевість.",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.smallBridges": "Коефіцієнти появи малих мостів",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.mediumBridges": "Коефіцієнти появи середніх мостів",
+  "text.autoconfig.yungsbridges-fabric-1_18.option.spawnRates.largeBridges": "Коефіцієнти появи великих мостів"
+}
