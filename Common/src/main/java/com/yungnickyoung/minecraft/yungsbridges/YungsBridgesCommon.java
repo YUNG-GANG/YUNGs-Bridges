@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 public class YungsBridgesCommon {
     public static final String MOD_ID = "yungsbridges";
-    public static final String MOD_NAME = "YUNG's Bridges";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static final ConfigModule CONFIG = new ConfigModule();
 

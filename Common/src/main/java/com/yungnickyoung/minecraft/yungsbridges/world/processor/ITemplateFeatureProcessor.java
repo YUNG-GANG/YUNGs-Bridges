@@ -4,13 +4,19 @@ import com.yungnickyoung.minecraft.yungsbridges.YungsBridgesCommon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -29,10 +35,10 @@ import java.util.function.Supplier;
  */
 public interface ITemplateFeatureProcessor {
     BlockState AIR = Blocks.AIR.defaultBlockState();
-    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/badlands"));
-    TagKey<Biome> TAIGA_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/taiga"));
-    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/savanna"));
-    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/jungle"));
+    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/badlands"));
+    TagKey<Biome> TAIGA_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/taiga"));
+    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/savanna"));
+    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/jungle"));
 
     /**
      * Processes the given template when placing a feature.

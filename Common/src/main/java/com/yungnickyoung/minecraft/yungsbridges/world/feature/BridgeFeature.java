@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
 import com.google.common.collect.Lists;
-import com.yungnickyoung.minecraft.yungsbridges.YungsBridgesCommon;
 import com.yungnickyoung.minecraft.yungsbridges.module.FeatureProcessorModule;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.config.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
