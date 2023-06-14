@@ -33,36 +33,36 @@ public class OptionalSlabProcessor implements ITemplateFeatureProcessor {
 
         // Randomly replace purpur slabs with stone brick slabs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PURPUR_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(purpurSlabReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(purpurSlabReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace end stone brick slabs with polished andesite slabs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.END_STONE_BRICK_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(endStoneBrickSlabReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(endStoneBrickSlabReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace dark prismarine slabs with cobble or andesite slabs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.DARK_PRISMARINE_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(darkPrismarineSlabReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(darkPrismarineSlabReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace prismarine brick slabs with smooth stone slabs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PRISMARINE_BRICK_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(prismarineSlabReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(prismarineSlabReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace crimson slabs w/ biome slab block or air
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.CRIMSON_SLAB)) {
             if (randomSource.nextFloat() < .5f) {
-                level.setBlock(blockInfo.pos, getSlabBlockWithState(getSlabBiomeVariant(biome), blockInfo.state), 2);
+                level.setBlock(blockInfo.pos(), getSlabBlockWithState(getSlabBiomeVariant(biome), blockInfo.state()), 2);
             } else {
-                level.setBlock(blockInfo.pos, Blocks.AIR.defaultBlockState(), 2);
+                level.setBlock(blockInfo.pos(), Blocks.AIR.defaultBlockState(), 2);
             }
         }
 
         // Randomly replace warped slabs with cobblestone slabs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.WARPED_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(warpedSlabReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(warpedSlabReplacer.get(randomSource), blockInfo.state()), 2);
         }
     }
 }

@@ -23,25 +23,25 @@ public class FenceBiomeProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden fence for biome variants
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_FENCE)) {
-            if (randomSource.nextFloat() < .75f || level.getBlockState(blockInfo.pos.above()).canOcclude()) { // Place fence
-                BlockState fenceBlock = getFenceBlockWithState(getFenceBiomeVariant(biome), blockInfo.state);
+            if (randomSource.nextFloat() < .75f || level.getBlockState(blockInfo.pos().above()).canOcclude()) { // Place fence
+                BlockState fenceBlock = getFenceBlockWithState(getFenceBiomeVariant(biome), blockInfo.state());
 
                 // Adjust neighboring fences
-                if (!level.getBlockState(blockInfo.pos.relative(Direction.NORTH)).canOcclude()) {
+                if (!level.getBlockState(blockInfo.pos().relative(Direction.NORTH)).canOcclude()) {
                     fenceBlock = fenceBlock.setValue(FenceBlock.NORTH, false);
                 }
-                if (!level.getBlockState(blockInfo.pos.relative(Direction.WEST)).canOcclude()) {
+                if (!level.getBlockState(blockInfo.pos().relative(Direction.WEST)).canOcclude()) {
                     fenceBlock = fenceBlock.setValue(FenceBlock.WEST, false);
                 }
-                level.setBlock(blockInfo.pos, fenceBlock, 2);
+                level.setBlock(blockInfo.pos(), fenceBlock, 2);
             } else { // Replace fence w/ air
-                level.setBlock(blockInfo.pos, Blocks.AIR.defaultBlockState(), 2);
+                level.setBlock(blockInfo.pos(), Blocks.AIR.defaultBlockState(), 2);
                 // Adjust neighboring fences
-                BlockPos neighborPos = blockInfo.pos.relative(Direction.NORTH);
+                BlockPos neighborPos = blockInfo.pos().relative(Direction.NORTH);
                 if (level.getBlockState(neighborPos).hasProperty(FenceBlock.SOUTH) && level.getBlockState(neighborPos).getValue(FenceBlock.SOUTH)) {
                     level.setBlock(neighborPos, level.getBlockState(neighborPos).setValue(FenceBlock.SOUTH, false), 2);
                 }
-                neighborPos = blockInfo.pos.relative(Direction.WEST);
+                neighborPos = blockInfo.pos().relative(Direction.WEST);
                 if (level.getBlockState(neighborPos).hasProperty(FenceBlock.EAST) && level.getBlockState(neighborPos).getValue(FenceBlock.EAST)) {
                     level.setBlock(neighborPos, level.getBlockState(neighborPos).setValue(FenceBlock.EAST, false), 2);
                 }

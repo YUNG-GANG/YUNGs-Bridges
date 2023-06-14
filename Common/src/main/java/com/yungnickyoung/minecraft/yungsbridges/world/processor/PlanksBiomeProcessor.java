@@ -19,7 +19,7 @@ public class PlanksBiomeProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden planks for biome variants
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_PLANKS)) {
-            level.setBlock(blockInfo.pos, getPlanksBiomeVariant(biome), 2);
+            level.setBlock(blockInfo.pos(), getPlanksBiomeVariant(biome), 2);
         }
     }
 }

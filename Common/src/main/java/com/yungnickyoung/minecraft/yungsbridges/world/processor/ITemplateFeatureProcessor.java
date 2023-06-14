@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraft.world.level.block.state.properties.WallSide;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.material.Material;
 
 import java.util.function.Supplier;
 
@@ -64,7 +63,7 @@ public interface ITemplateFeatureProcessor {
         // Generate vertical pillar down
         BlockPos.MutableBlockPos mutable = pos.below().mutable();
         BlockState currBlock = level.getBlockState(mutable);
-        while (mutable.getY() > 0 && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+        while (mutable.getY() > 0 && (currBlock.isAir() || currBlock.liquid())) {
             level.setBlock(mutable, legBlockSupplier.get(), 2);
             mutable.move(Direction.DOWN);
             currBlock = level.getBlockState(mutable);

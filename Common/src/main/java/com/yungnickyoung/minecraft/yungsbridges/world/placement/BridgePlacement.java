@@ -11,7 +11,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-import net.minecraft.world.level.material.Material;
 
 import java.util.stream.Stream;
 
@@ -171,7 +170,7 @@ public class BridgePlacement extends PlacementModifier {
 //                            WATER_BLOCKS.add(seaLevelMutable.immutable());
 //                        }
 
-                        if (placementContext.getBlockState(seaLevelMutable).getMaterial() != Material.WATER) {
+                        if (!placementContext.getBlockState(seaLevelMutable).liquid()) {
                             isAllWater = false;
                             break;
                         }

@@ -27,22 +27,22 @@ public class OptionalStairProcessor implements ITemplateFeatureProcessor {
 
         // Randomly replace purpur stairs with stone brick stairs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PURPUR_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(purpurStairsReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getStairsBlockWithState(purpurStairsReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace dark prismarine stairs with cobble or andesite stairs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.DARK_PRISMARINE_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(darkPrismarineStairsReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getStairsBlockWithState(darkPrismarineStairsReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace warped stairs with cobblestone stairs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.WARPED_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(warpedStairsReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getStairsBlockWithState(warpedStairsReplacer.get(randomSource), blockInfo.state()), 2);
         }
 
         // Randomly replace crimson stairs with wood stairs
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.CRIMSON_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(getStairsBiomeVariant(biome), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getStairsBlockWithState(getStairsBiomeVariant(biome), blockInfo.state()), 2);
         }
     }
 }

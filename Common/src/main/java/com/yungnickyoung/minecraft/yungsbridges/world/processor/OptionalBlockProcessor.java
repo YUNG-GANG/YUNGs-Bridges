@@ -35,35 +35,35 @@ public class OptionalBlockProcessor implements ITemplateFeatureProcessor {
 
         // Randomly replace brown stained glass with a stone brick variant
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.BROWN_STAINED_GLASS)) {
-            level.setBlock(blockInfo.pos, brownStainedGlassReplacer.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), brownStainedGlassReplacer.get(randomSource), 2);
         }
 
         // Randomly replace blue stained glass with chiseled stone bricks
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.BLUE_STAINED_GLASS)) {
-            level.setBlock(blockInfo.pos, blueStainedGlassReplacer.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), blueStainedGlassReplacer.get(randomSource), 2);
         }
 
         // Randomly replace red stained glass with cobblestone
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.RED_STAINED_GLASS)) {
-            level.setBlock(blockInfo.pos, redStainedGlassReplacer.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), redStainedGlassReplacer.get(randomSource), 2);
         }
 
         // Randomly replace end stone bricks with polished andesite
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.END_STONE_BRICKS)) {
-            level.setBlock(blockInfo.pos, endStoneBricksReplacer.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), endStoneBricksReplacer.get(randomSource), 2);
         }
 
         // Randomly replace dark prismarine with cobble or andesite
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.DARK_PRISMARINE)) {
-            level.setBlock(blockInfo.pos, darkPrismarineReplacer.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), darkPrismarineReplacer.get(randomSource), 2);
         }
 
         // Randomly replace lime stained glass w/ log block or air
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.LIME_STAINED_GLASS)) {
             if (randomSource.nextFloat() < .5f) {
-                level.setBlock(blockInfo.pos, getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state), 2);
+                level.setBlock(blockInfo.pos(), getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state()), 2);
             } else {
-                level.setBlock(blockInfo.pos, Blocks.AIR.defaultBlockState(), 2);
+                level.setBlock(blockInfo.pos(), Blocks.AIR.defaultBlockState(), 2);
             }
         }
     }

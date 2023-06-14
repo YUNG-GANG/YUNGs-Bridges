@@ -20,7 +20,7 @@ public class LogBiomeProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden logs for biome variants
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_LOG)) {
-            level.setBlock(blockInfo.pos, getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state()), 2);
         }
     }
 }

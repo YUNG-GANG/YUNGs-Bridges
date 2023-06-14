@@ -1,7 +1,9 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
 import com.google.common.collect.Lists;
+import com.yungnickyoung.minecraft.yungsbridges.YungsBridgesCommon;
 import com.yungnickyoung.minecraft.yungsbridges.module.FeatureProcessorModule;
+import com.yungnickyoung.minecraft.yungsbridges.services.Services;
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.config.BridgeFeatureConfig;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.core.BlockPos;
@@ -53,7 +55,9 @@ public class BridgeFeature extends AbstractTemplateFeature<BridgeFeatureConfig> 
         if (!context.config().isZAxis) placementSettings.setRotation(Rotation.COUNTERCLOCKWISE_90);
         StructureTemplate template = this.createTemplateWithPlacement(context.config().id, context.level(), context.random(), startPos, placementSettings);
 
-//        YungsBridgesCommon.LOGGER.info("Bridge at {} {} {} - {}, {}", context.origin().getX(), context.origin().getY(), context.origin().getZ(), context.config().id, context.config().isZAxis);
+        if (Services.PLATFORM.isDevelopmentEnvironment()) {
+            YungsBridgesCommon.LOGGER.info("Bridge at {} {} {} - {}, {}", context.origin().getX(), context.origin().getY(), context.origin().getZ(), context.config().id, context.config().isZAxis);
+        }
 
         return template != null;
     }

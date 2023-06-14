@@ -25,17 +25,17 @@ public class LanternRotProcessor implements ITemplateFeatureProcessor {
     public void processTemplate(StructureTemplate template, WorldGenLevel level, RandomSource randomSource, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
         // Random chance to replace some lanterns w/ air
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.LANTERN)) {
-            level.setBlock(blockInfo.pos, getLanternBlockWithState(lanternSelector.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getLanternBlockWithState(lanternSelector.get(randomSource), blockInfo.state()), 2);
         }
 
         // Random chance to replace some torches w/ air
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.TORCH)) {
-            level.setBlock(blockInfo.pos, torchSelector.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), torchSelector.get(randomSource), 2);
         }
 
         // Random chance to replace some wall torches w/ air
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.WALL_TORCH)) {
-            level.setBlock(blockInfo.pos, wallTorchSelector.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), wallTorchSelector.get(randomSource), 2);
         }
     }
 }

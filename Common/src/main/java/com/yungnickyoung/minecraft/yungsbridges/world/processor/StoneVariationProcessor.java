@@ -33,27 +33,27 @@ public class StoneVariationProcessor implements ITemplateFeatureProcessor {
     public void processTemplate(StructureTemplate template, WorldGenLevel level, RandomSource randomSource, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
         // Stone brick variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICKS)) {
-            level.setBlock(blockInfo.pos, stoneBrickSelector.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), stoneBrickSelector.get(randomSource), 2);
         }
 
         // Stone brick slab variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICK_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(stoneBrickSlabSelector.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(stoneBrickSlabSelector.get(randomSource), blockInfo.state()), 2);
         }
 
         // Stone brick wall variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICK_WALL)) {
-            level.setBlock(blockInfo.pos, getWallBlockWithState(stoneBrickWallSelector.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getWallBlockWithState(stoneBrickWallSelector.get(randomSource), blockInfo.state()), 2);
         }
 
         // Stone brick stair variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STONE_BRICK_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(stoneBrickStairSelector.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getStairsBlockWithState(stoneBrickStairSelector.get(randomSource), blockInfo.state()), 2);
         }
 
         // Cobblestone variation
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.COBBLESTONE)) {
-            level.setBlock(blockInfo.pos, cobblestoneSelector.get(randomSource), 2);
+            level.setBlock(blockInfo.pos(), cobblestoneSelector.get(randomSource), 2);
         }
     }
 }

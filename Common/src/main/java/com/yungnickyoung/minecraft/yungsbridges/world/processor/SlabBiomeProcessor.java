@@ -20,7 +20,7 @@ public class SlabBiomeProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden slabs for biome variants
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_SLAB)) {
-            level.setBlock(blockInfo.pos, getSlabBlockWithState(getSlabBiomeVariant(biome), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getSlabBlockWithState(getSlabBiomeVariant(biome), blockInfo.state()), 2);
         }
     }
 }

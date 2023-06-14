@@ -16,7 +16,7 @@ public class OptionalWallProcessor implements ITemplateFeatureProcessor {
     public void processTemplate(StructureTemplate template, WorldGenLevel level, RandomSource randomSource, BlockPos cornerPos, BlockPos centerPos, StructurePlaceSettings placementSettings) {
         // Randomly replace end stone brick walls with stone brick walls
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.END_STONE_BRICK_WALL)) {
-            level.setBlock(blockInfo.pos, getWallBlockWithState(endStoneBrickWallReplacer.get(randomSource), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getWallBlockWithState(endStoneBrickWallReplacer.get(randomSource), blockInfo.state()), 2);
         }
     }
 }

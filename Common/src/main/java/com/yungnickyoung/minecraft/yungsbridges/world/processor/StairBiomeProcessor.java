@@ -19,7 +19,7 @@ public class StairBiomeProcessor implements ITemplateFeatureProcessor {
 
         // Replace wooden stairs for biome variants
         for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.OAK_STAIRS)) {
-            level.setBlock(blockInfo.pos, getStairsBlockWithState(getStairsBiomeVariant(biome), blockInfo.state), 2);
+            level.setBlock(blockInfo.pos(), getStairsBlockWithState(getStairsBiomeVariant(biome), blockInfo.state()), 2);
         }
     }
 }
