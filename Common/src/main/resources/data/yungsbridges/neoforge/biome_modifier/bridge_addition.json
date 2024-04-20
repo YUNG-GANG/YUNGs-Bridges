@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#yungsbridges:has_structure/bridge",
+  "features": [
+    "yungsbridges:bridge_list"
+  ],
+  "step": "surface_structures"
+}
