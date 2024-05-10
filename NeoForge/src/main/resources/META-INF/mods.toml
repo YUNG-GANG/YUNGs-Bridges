@@ -11,7 +11,7 @@ issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Bridges/issues"
     authors="YUNGNICKYOUNG"
     description="${mod_description}"
     logoFile="logo.png"
-    displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-bridges"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-bridges-neoforge"
 
 [modproperties.${mod_id}]
     catalogueImageIcon="icon.png"
