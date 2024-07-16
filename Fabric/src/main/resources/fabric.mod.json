@@ -13,7 +13,7 @@
     "issues": "https://github.com/yungnickyoung/YUNGs-Bridges/issues",
     "discord": "discord.gg/rns3beq"
   },
-  "license": "LGPLv3",
+  "license": "${license}",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
@@ -22,15 +22,14 @@
     ]
   },
   "mixins": [
-    "yungsbridges.mixins.json",
-    "yungsbridges_fabric.mixins.json"
+    "yungsbridges.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",
     "fabric": ">=${fabric_version}",
     "minecraft": ">=${mc_version}",
     "cloth-config2": ">=${clothconfig_version_fabric}",
-    "java": ">=17",
+    "java": ">=${java_version}",
     "yungsapi": ">=${mc_version}-Fabric-${yungsapi_version}"
   },
   "custom": {

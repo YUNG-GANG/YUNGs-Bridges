@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.yungsbridges.module.PlacementModifierTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
  */
 @MethodsReturnNonnullByDefault
 public class BridgePlacement extends PlacementModifier {
-    public static final Codec<BridgePlacement> CODEC = RecordCodecBuilder.create((codec) ->
+    public static final MapCodec<BridgePlacement> CODEC = RecordCodecBuilder.mapCodec((codec) ->
         codec.group(
             Codec.INT.fieldOf("length").forGetter((bridgePlacement) -> bridgePlacement.length),
             Codec.INT.fieldOf("width").forGetter((bridgePlacement) -> bridgePlacement.width),

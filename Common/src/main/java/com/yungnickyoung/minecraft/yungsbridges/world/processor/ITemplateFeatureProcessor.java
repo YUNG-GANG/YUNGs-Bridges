@@ -34,10 +34,10 @@ import java.util.function.Supplier;
  */
 public interface ITemplateFeatureProcessor {
     BlockState AIR = Blocks.AIR.defaultBlockState();
-    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/badlands"));
-    TagKey<Biome> TAIGA_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/taiga"));
-    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/savanna"));
-    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "collections/jungle"));
+    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/badlands"));
+    TagKey<Biome> TAIGA_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/taiga"));
+    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/savanna"));
+    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/jungle"));
 
     /**
      * Processes the given template when placing a feature.

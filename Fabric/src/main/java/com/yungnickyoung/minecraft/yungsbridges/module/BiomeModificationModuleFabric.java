@@ -15,9 +15,9 @@ public class BiomeModificationModuleFabric {
     }
 
     private static void addFeaturesToBiomes() {
-        BiomeModifications.create(new ResourceLocation(YungsBridgesCommon.MOD_ID, "bridge_addition"))
+        BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "bridge_addition"))
                 .add(ModificationPhase.ADDITIONS,
-                        context -> context.hasTag(TagKey.create(Registries.BIOME, new ResourceLocation(YungsBridgesCommon.MOD_ID, "has_structure/bridge"))),
-                        context -> context.getGenerationSettings().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(YungsBridgesCommon.MOD_ID, "bridge_list"))));
+                        context -> context.hasTag(TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "has_structure/bridge"))),
+                        context -> context.getGenerationSettings().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "bridge_list"))));
     }
 }
