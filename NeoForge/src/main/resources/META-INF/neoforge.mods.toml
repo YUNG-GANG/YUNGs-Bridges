@@ -1,4 +1,4 @@
-modLoader="javafml" #mandatory
+modLoader="javafml"
 loaderVersion="${neoforge_loader_version_range}"
 license="${license}"
 issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Bridges/issues"
