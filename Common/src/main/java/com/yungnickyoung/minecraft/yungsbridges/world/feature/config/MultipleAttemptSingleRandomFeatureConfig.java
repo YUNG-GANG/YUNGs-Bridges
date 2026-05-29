@@ -2,17 +2,18 @@ package com.yungnickyoung.minecraft.yungsbridges.world.feature.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.util.stream.Stream;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class MultipleAttemptSingleRandomFeatureConfig implements FeatureConfiguration {
     public static final Codec<MultipleAttemptSingleRandomFeatureConfig> CODEC = RecordCodecBuilder.create(builder -> builder
             .group(
@@ -29,7 +30,7 @@ public class MultipleAttemptSingleRandomFeatureConfig implements FeatureConfigur
     }
 
     @Override
-    public Stream<ConfiguredFeature<?, ?>> getFeatures() {
+    public Stream<Holder<ConfiguredFeature<?, ?>>> getSubFeatures() {
         return this.getPlacedFeatures().stream().flatMap((placedFeatureSupplier) -> placedFeatureSupplier.value().getFeatures());
     }
 }

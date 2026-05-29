@@ -1,13 +1,13 @@
 package com.yungnickyoung.minecraft.yungsbridges.world.feature;
 
 import com.yungnickyoung.minecraft.yungsbridges.world.feature.config.MultipleAttemptSingleRandomFeatureConfig;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
  * Randomly iterates a list of features, attempting to generate each one.
  * Stops upon successful generation of a feature.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class MultipleAttemptSingleRandomFeature extends Feature<MultipleAttemptSingleRandomFeatureConfig> {
     public MultipleAttemptSingleRandomFeature() {
         super(MultipleAttemptSingleRandomFeatureConfig.CODEC);
