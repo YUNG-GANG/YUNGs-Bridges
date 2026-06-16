@@ -2,22 +2,22 @@ package com.yungnickyoung.minecraft.yungsbridges.world.placement;
 
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.yungsbridges.module.PlacementModifierTypeModule;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.util.stream.Stream;
 
 /**
  * Properly initializes this placement's Random seed (which MC doesn't do on its own)
  * to maximize variability in feature placement.
  */
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+
+
 public class RngInitializerPlacement extends PlacementModifier {
     private static final RngInitializerPlacement INSTANCE = new RngInitializerPlacement();
     public static final MapCodec<RngInitializerPlacement> CODEC = MapCodec.unit(() -> INSTANCE);

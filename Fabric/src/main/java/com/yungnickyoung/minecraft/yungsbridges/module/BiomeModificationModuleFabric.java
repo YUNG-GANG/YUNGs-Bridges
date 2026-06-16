@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.GenerationStep;
 
@@ -15,9 +15,9 @@ public class BiomeModificationModuleFabric {
     }
 
     private static void addFeaturesToBiomes() {
-        BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "bridge_addition"))
+        BiomeModifications.create(Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "bridge_addition"))
                 .add(ModificationPhase.ADDITIONS,
-                        context -> context.hasTag(TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "has_structure/bridge"))),
-                        context -> context.getGenerationSettings().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "bridge_list"))));
+                        context -> context.hasTag(TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "has_structure/bridge"))),
+                        context -> context.getGenerationSettings().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ResourceKey.create(Registries.PLACED_FEATURE, Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "bridge_list"))));
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -34,10 +34,10 @@ import java.util.function.Supplier;
  */
 public interface ITemplateFeatureProcessor {
     BlockState AIR = Blocks.AIR.defaultBlockState();
-    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/badlands"));
-    TagKey<Biome> TAIGA_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/taiga"));
-    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/savanna"));
-    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/jungle"));
+    TagKey<Biome> BADLANDS_TAG = TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/badlands"));
+    TagKey<Biome> TAIGA_TAG = TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/taiga"));
+    TagKey<Biome> SAVANNA_TAG = TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/savanna"));
+    TagKey<Biome> JUNGLE_TAG = TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(YungsBridgesCommon.MOD_ID, "collections/jungle"));
 
     /**
      * Processes the given template when placing a feature.
@@ -113,10 +113,10 @@ public interface ITemplateFeatureProcessor {
     default BlockState getWallBlockWithState(BlockState input, BlockState source) {
         if (input.getBlock() instanceof WallBlock && source.getBlock() instanceof WallBlock) {
             return input
-                    .setValue(WallBlock.NORTH_WALL, source.hasProperty(WallBlock.NORTH_WALL) ? source.getValue(WallBlock.NORTH_WALL) : WallSide.NONE)
-                    .setValue(WallBlock.EAST_WALL, source.hasProperty(WallBlock.EAST_WALL) ? source.getValue(WallBlock.EAST_WALL) : WallSide.NONE)
-                    .setValue(WallBlock.SOUTH_WALL, source.hasProperty(WallBlock.SOUTH_WALL) ? source.getValue(WallBlock.SOUTH_WALL) : WallSide.NONE)
-                    .setValue(WallBlock.WEST_WALL, source.hasProperty(WallBlock.WEST_WALL) ? source.getValue(WallBlock.WEST_WALL) : WallSide.NONE)
+                    .setValue(WallBlock.NORTH, source.hasProperty(WallBlock.NORTH) ? source.getValue(WallBlock.NORTH) : WallSide.NONE)
+                    .setValue(WallBlock.EAST, source.hasProperty(WallBlock.EAST) ? source.getValue(WallBlock.EAST) : WallSide.NONE)
+                    .setValue(WallBlock.SOUTH, source.hasProperty(WallBlock.SOUTH) ? source.getValue(WallBlock.SOUTH) : WallSide.NONE)
+                    .setValue(WallBlock.WEST, source.hasProperty(WallBlock.WEST) ? source.getValue(WallBlock.WEST) : WallSide.NONE)
                     .setValue(WallBlock.UP, source.hasProperty(WallBlock.UP) ? source.getValue(WallBlock.UP) : true)
                     .setValue(WallBlock.WATERLOGGED, source.hasProperty(WallBlock.WATERLOGGED) ? source.getValue(WallBlock.WATERLOGGED) : false);
         } else {

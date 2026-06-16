@@ -5,7 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.yungsbridges.module.PlacementModifierTypeModule;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * Each bridge requires solid land on either side of it,
  * as well as a certain distance of water only between the two ends.
  */
-@MethodsReturnNonnullByDefault
+
 public class BridgePlacement extends PlacementModifier {
     public static final MapCodec<BridgePlacement> CODEC = RecordCodecBuilder.mapCodec((codec) ->
         codec.group(

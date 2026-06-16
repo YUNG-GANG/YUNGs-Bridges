@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.yungsbridges.YungsBridgesCommon;
 import com.yungnickyoung.minecraft.yungsbridges.world.processor.ITemplateFeatureProcessor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -37,7 +37,7 @@ public abstract class AbstractTemplateFeature<C extends FeatureConfiguration> ex
      * @param pos The position to generate the feature at. This will be the corner of the feature.
      * @return The generated Template
      */
-    protected StructureTemplate createTemplate(ResourceLocation id, WorldGenLevel level, RandomSource randomSource, BlockPos pos) {
+    protected StructureTemplate createTemplate(Identifier id, WorldGenLevel level, RandomSource randomSource, BlockPos pos) {
         return createTemplateWithPlacement(id, level, randomSource, pos, new StructurePlaceSettings());
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractTemplateFeature<C extends FeatureConfiguration> ex
      * @return The generated Template
      */
     protected StructureTemplate createTemplateWithPlacement(
-        ResourceLocation id,
+        Identifier id,
         WorldGenLevel level,
         RandomSource randomSource,
         BlockPos cornerPos,
