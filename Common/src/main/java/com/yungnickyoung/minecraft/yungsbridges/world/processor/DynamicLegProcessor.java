@@ -26,7 +26,7 @@ public class DynamicLegProcessor implements ITemplateFeatureProcessor {
         Holder<Biome> biome = level.getBiome(cornerPos);
 
         // Yellow stained glass for log legs
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.YELLOW_STAINED_GLASS))
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.yellow()))
             generatePillarDown(level, blockInfo.pos(),
                 () -> getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state()),
                 () -> getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state()));
@@ -38,19 +38,19 @@ public class DynamicLegProcessor implements ITemplateFeatureProcessor {
                 () -> getFenceBlockWithState(getFenceBiomeVariant(biome), blockInfo.state()));
 
         // Pink stained glass for stone bricks legs
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.PINK_STAINED_GLASS))
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.pink()))
             generatePillarDown(level, blockInfo.pos(), () -> stoneBrickSelector.get(randomSource), () -> stoneBrickSelector.get(randomSource));
 
         // Blue stained glass for polished andesite legs
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.LIGHT_BLUE_STAINED_GLASS))
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.lightBlue()))
             generatePillarDown(level, blockInfo.pos(), Blocks.POLISHED_ANDESITE::defaultBlockState, Blocks.POLISHED_ANDESITE::defaultBlockState);
 
         // Magenta stained glass for cobblestone legs
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.MAGENTA_STAINED_GLASS))
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.magenta()))
             generatePillarDown(level, blockInfo.pos(), () -> cobblestoneSelector.get(randomSource), () -> cobblestoneSelector.get(randomSource));
 
         // Gray stained glass for polished andesite replacement w/ stone bricks legs
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.GRAY_STAINED_GLASS))
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.gray()))
             generatePillarDown(level, blockInfo.pos(), Blocks.POLISHED_ANDESITE::defaultBlockState, () -> stoneBrickSelector.get(randomSource));
 
         // Prismarine walls for cobblestone wall legs
