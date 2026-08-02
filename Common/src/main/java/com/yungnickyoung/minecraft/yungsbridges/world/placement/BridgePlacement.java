@@ -81,7 +81,10 @@ public class BridgePlacement extends PlacementModifier {
 
         // Scan the grid, looking for suitable locations
         for (int candidateMiddleMinorAxisOffset = width / 2 + widthOffset + 1; candidateMiddleMinorAxisOffset < 16 - width / 2 - widthOffset; candidateMiddleMinorAxisOffset++) {
-            for (int candidateStartMajorAxisOffset = 0; candidateStartMajorAxisOffset < 16; candidateStartMajorAxisOffset++) {
+            // 26.2 restricts feature-stage terrain access to the generating chunk and its immediate
+            // neighbors. A 31-block bridge therefore needs to start one block before this chunk.
+            int minimumStartOffset = Math.min(0, 30 - length);
+            for (int candidateStartMajorAxisOffset = minimumStartOffset; candidateStartMajorAxisOffset < 16; candidateStartMajorAxisOffset++) {
 //                SOLID_BLOCKS.clear();
 //                WATER_BLOCKS.clear();
 
@@ -94,6 +97,10 @@ public class BridgePlacement extends PlacementModifier {
                 BlockPos endingPos = isZAxis
                     ? new BlockPos(blockPos.getX() + candidateMiddleMinorAxisOffset, seaLevel, blockPos.getZ() + candidateStartMajorAxisOffset + length + 1)
                     : new BlockPos(blockPos.getX() + candidateStartMajorAxisOffset + length + 1, seaLevel, blockPos.getZ() + candidateMiddleMinorAxisOffset);
+
+                if (!isWithinWorldgenReadRadius(blockPos, startingPos) || !isWithinWorldgenReadRadius(blockPos, endingPos)) {
+                    continue;
+                }
 
                 // Either side of the bridge must lead to solid land
                 if (!
@@ -198,6 +205,14 @@ public class BridgePlacement extends PlacementModifier {
         }
 
         return Stream.empty();
+    }
+
+    private static boolean isWithinWorldgenReadRadius(BlockPos generatingOrigin, BlockPos target) {
+        int generatingChunkX = generatingOrigin.getX() >> 4;
+        int generatingChunkZ = generatingOrigin.getZ() >> 4;
+        int targetChunkX = target.getX() >> 4;
+        int targetChunkZ = target.getZ() >> 4;
+        return Math.max(Math.abs(targetChunkX - generatingChunkX), Math.abs(targetChunkZ - generatingChunkZ)) <= 1;
     }
 
     @Override

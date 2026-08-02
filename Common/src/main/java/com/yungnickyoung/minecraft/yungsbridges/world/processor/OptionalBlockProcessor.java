@@ -34,17 +34,17 @@ public class OptionalBlockProcessor implements ITemplateFeatureProcessor {
         Holder<Biome> biome = level.getBiome(cornerPos);
 
         // Randomly replace brown stained glass with a stone brick variant
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.BROWN_STAINED_GLASS)) {
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.brown())) {
             level.setBlock(blockInfo.pos(), brownStainedGlassReplacer.get(randomSource), 2);
         }
 
         // Randomly replace blue stained glass with chiseled stone bricks
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.BLUE_STAINED_GLASS)) {
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.blue())) {
             level.setBlock(blockInfo.pos(), blueStainedGlassReplacer.get(randomSource), 2);
         }
 
         // Randomly replace red stained glass with cobblestone
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.RED_STAINED_GLASS)) {
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.red())) {
             level.setBlock(blockInfo.pos(), redStainedGlassReplacer.get(randomSource), 2);
         }
 
@@ -59,7 +59,7 @@ public class OptionalBlockProcessor implements ITemplateFeatureProcessor {
         }
 
         // Randomly replace lime stained glass w/ log block or air
-        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.LIME_STAINED_GLASS)) {
+        for (StructureTemplate.StructureBlockInfo blockInfo : template.filterBlocks(cornerPos, placementSettings, Blocks.STAINED_GLASS.lime())) {
             if (randomSource.nextFloat() < .5f) {
                 level.setBlock(blockInfo.pos(), getLogBlockWithState(getLogBiomeVariant(biome), blockInfo.state()), 2);
             } else {
